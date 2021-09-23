@@ -13,7 +13,7 @@ GoogleカレンダーのようなカレンダーUIに予定を登録して，視
 
 ### フロントエンド
 Nuxt.js
-- axios
+- axios(非同期処理)
 
 ### その他
 docker
