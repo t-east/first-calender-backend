@@ -1,2 +1,2 @@
-!docker/mysql/mysql_data/.gitkeep
 docker/mysql/mysql_data/*
+!docker/mysql/mysql_data/.gitkeep
