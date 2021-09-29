@@ -3,7 +3,9 @@ GoogleカレンダーのようなカレンダーUIに予定を登録して，視
 
 ## 開発環境
 ### サーバー起動
+```
 docker-compose -f docker/docker-compose.yaml up
+```
 
 ## デプロイ
 TBA
