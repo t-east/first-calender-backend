@@ -4,7 +4,9 @@ GoogleカレンダーのようなカレンダーUIに予定を登録して，視
 ## 開発環境
 ### サーバー起動
 ```
-docker-compose -f docker/docker-compose.yaml up
+cd docker
+docker-compose up -d
+docker exec -it app sh
 ```
 
 ## デプロイ
@@ -18,10 +20,6 @@ TBA
 - MySQL
 - net/http,
 - gorm?(未定)
-
-#### フロントエンド
-Nuxt.js
-- axios(非同期処理)
 
 #### その他
 docker
