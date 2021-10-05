@@ -1,3 +1,4 @@
 mysql/mysql_data/*
 !mysql/mysql_data/.gitkeep
 app/__pycache__
+app/.mypy_cache
