@@ -4,9 +4,10 @@ GoogleカレンダーのようなカレンダーUIに予定を登録して，視
 ## 開発環境
 ### サーバー起動
 ```
-cd docker
-docker-compose up -d
-docker exec -it app sh
+# Docker Imageのビルド
+make build
+# コンテナ&サーバー起動
+make dev
 ```
 
 ## デプロイ
@@ -18,13 +19,12 @@ TBA
 ## 利用するツール等
 #### バックエンド
 - MySQL
-- net/http,
-- gorm?(未定)
+- FastAPI
 
 #### その他
 docker
 - MySQLコンテナ
-- GolangのAPIサーバ
+- FastAPI
 
 #### あったらいいな機能案
 - 使用頻度に基づくリマインドの調整機能

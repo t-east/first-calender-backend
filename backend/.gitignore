@@ -1,2 +1,3 @@
-docker/mysql/mysql_data/*
-!docker/mysql/mysql_data/.gitkeep
+mysql/mysql_data/*
+!mysql/mysql_data/.gitkeep
+app/__pycache__
