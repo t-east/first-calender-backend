@@ -8,4 +8,4 @@ COPY pyproject.toml poetry.lock /backend/
 RUN python3.8 -m pip install --no-cache-dir poetry && \
   poetry config virtualenvs.create false && \
   poetry install && \
-  rm pyproject.toml poetry.lock
+  rm pyproject.toml poetry.lockaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
