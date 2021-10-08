@@ -11,7 +11,7 @@ make dev
 ```
 
 ## デプロイ
-TBA
+TBAaaaaaa
 ## APIドキュメント
 TBA
 ## DBドキュメント
