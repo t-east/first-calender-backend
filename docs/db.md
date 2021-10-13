@@ -1,5 +1,4 @@
 # User
-- [ ] **実装済み**
 
 |  name  |  type  | nullable | details |  
 | ---- | ---- | ---- | ---- |
