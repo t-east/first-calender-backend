@@ -6,8 +6,6 @@
 |  user_name  |  string  | false | ユーザ名 |
 |  email  |  string  | false | メールアドレス |
 |  password_hash  |  hash?  | false | パスワードのハッシュ値 |
-|  profile  |  string  | true | プロフィール |
-|  profile_image_path |  string  | false | プロフィール画像パス |
 |  birth_date  |  string  | false | 生年月日 |
 |  registered_at  |  date  | false | ユーザ登録時刻 |
 |  last_login_at  |  date  | true | 最終ログイン時刻 |
@@ -26,6 +24,8 @@
 |  created_at  |  date  | false | イベント作成時刻 | 
 |  updated_at  |  date  | true | イベントアップデート時刻 | 
 |  deleted_at  |  date  | true | イベント削除時刻 | 
+|  color |  string  | false | イベントの色分け |
+|  url  |  string  | true | オンライン会議用のURL | 
 
 
 # Reminder
