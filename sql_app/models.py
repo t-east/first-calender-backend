@@ -29,4 +29,3 @@ class Event(Base):
     updated_at = Column(DateTime, nullable=False)
     deleted_at = Column(DateTime, nullable=False)
     color = Column(String, nullable=False, index=True)
-    

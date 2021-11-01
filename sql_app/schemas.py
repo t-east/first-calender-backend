@@ -32,6 +32,6 @@ class Event(BaseModel):
     updated_at: datetime.datetime
     deleted_at: datetime.datetime
     color: str
-    
+
     class Config:
         orm_mode = True
