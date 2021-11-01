@@ -3,17 +3,17 @@ from . import models, schemas
 
 
 # ユーザー情報取得
-def get_users(db: Session, skip: int = 0, limit: int = 100):
+def get_users(db: Session, skip: int = 0, limit: int = 100) -> models.User:
     return db.query(models.User).offset(skip).limit(limit).all()
 
 
 # イベント情報取得
-def get_events(db: Session, skip: int = 0, limit: int = 100):
+def get_events(db: Session, skip: int = 0, limit: int = 100) -> models.Event:
     return db.query(models.Event).offset(skip).limit(limit).all()
 
 
 # ユーザー登録
-def create_user(db: Session, user: schemas.User):
+def create_user(db: Session, user: schemas.User) -> models.User:
     db_user = models.User(user_name=user.user_name,
                           user_pass=user.password_hash,
                           user_email=user.email,
@@ -26,8 +26,8 @@ def create_user(db: Session, user: schemas.User):
 
 
 # イベント登録
-def create_event(db: Session, event: schemas.Event):
-    db_event = models.event(event_name=event.event_name,
+def create_event(db: Session, event: schemas.Event) -> models.Event:
+    db_event = models.Event(event_name=event.event_name,
                             event_description=event.description,
                             event_begin_date=event.begin_date,
                             event_is_allday=event.is_all_day,
