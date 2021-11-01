@@ -6,6 +6,7 @@
 |  user_name  |  string  | false | ユーザ名 |
 |  email  |  string  | false | メールアドレス |
 |  password_hash  |  hash?  | false | パスワードのハッシュ値 |
+|  profile_image_path  |  string  | true | プロフィールの画像パス(?) | 
 |  birth_date  |  string  | false | 生年月日 |
 |  registered_at  |  date  | false | ユーザ登録時刻 |
 |  last_login_at  |  date  | true | 最終ログイン時刻 |
@@ -35,7 +36,7 @@
 |  user_id  |  int  | false | ユーザ識別子 | 
 |  event_id  |  int  | false | イベント識別子 | 
 |  remind_time  |  date  | false | リマインド時刻 | 
-|  color  |  string  | false | リマインドカラー（いる？） |
+|  color  |  string  | false | リマインドカラー |
 |  created_at  |  date  | false | リマインド作成時刻 | 
 |  updated_at  |  date  | true | リマインドアップデート時刻 | 
 |  deleted_at  |  date  | true | リマインド削除時刻 |
