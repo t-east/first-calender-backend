@@ -5,7 +5,7 @@ from typing import Dict, List
 from . import crud, models, schemas
 from .database import SessionLocal, engine
 
-models.Base.metadata.create_all(bind=engine) 
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -16,25 +16,29 @@ def get_db():
     finally:
         db.close()
 
-#DB_CREATE
+
+# DB_CREATE
 @app.post("/users", response_model=schemas.User)
-async def create_user(user: schemas.User, db: Session = Depends(get_db)):
+async def create_user(user: schemas.User, db: Session=Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
+
 @app.post("/events", response_model=schemas.Event)
-async def create_event(event: schemas.event, db: Session = Depends(get_db)):
+async def create_event(event: schemas.event, db: Session=Depends(get_db)):
     return crud.create_event(db=db, event=event)
 
-#DB_READ
+
+# DB_READ
 @app.get("/users", response_model=List[schemas.User])
-async def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+async def read_users(skip: int=0, limit: int=100, db: Session=Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
+
 @app.get("/events", response_model=List[schemas.Event])
-async def read_events(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+async def read_events(skip: int=0, limit: int=100, db: Session=Depends(get_db)):
     events = crud.get_events(db, skip=skip, limit=limit)
-    return events    
+    return events
 
 
 @app.get("/")
