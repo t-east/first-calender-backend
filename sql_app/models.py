@@ -1,4 +1,4 @@
-from sqlalchemy import (Column, ForeignKey, Integer, 
+from sqlalchemy import (Column, ForeignKey, Integer,
                         String, DateTime, Date, Boolean, Text)
 from .database import Base
 
@@ -17,8 +17,8 @@ class User(Base):
 
 class Event(Base):
     __tablename__ = 'events'
-    user_id = Column(Integer, 
-    ForeignKey('users.user_id', ondelete='SET NULL'), nullable=False)
+    user_id = Column(Integer,
+                     ForeignKey('users.user_id', ondelete='SET NULL'), nullable=False)
     event_id = Column(Integer, primary_key=True, index=True, nullable=False)
     event_name = Column(String, unique=False, index=True, nullable=False)
     description = Column(Text, nullable=True)
@@ -29,4 +29,4 @@ class Event(Base):
     updated_at = Column(DateTime, nullable=False)
     deleted_at = Column(DateTime, nullable=False)
     color = Column(String, nullable=False, index=True)
-
+    
