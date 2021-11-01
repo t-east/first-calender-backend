@@ -1,10 +1,18 @@
-from sqlalchemy import (Column, ForeignKey, Integer,
-                        String, DateTime, Date, Boolean, Text)
+from sqlalchemy import (
+    Column,
+    ForeignKey,
+    Integer,
+    String,
+    DateTime,
+    Date,
+    Boolean,
+    Text,
+)
 from .database import Base
 
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
     user_id = Column(Integer, primary_key=True, index=True)
     user_name = Column(String, unique=True, index=True)
     password_hash = Column(String, nullable=False)
@@ -16,9 +24,10 @@ class User(Base):
 
 
 class Event(Base):
-    __tablename__ = 'events'
-    user_id = Column(Integer,
-                     ForeignKey('users.user_id', ondelete='SET NULL'), nullable=False)
+    __tablename__ = "events"
+    user_id = Column(
+        Integer, ForeignKey("users.user_id", ondelete="SET NULL"), nullable=False
+    )
     event_id = Column(Integer, primary_key=True, index=True, nullable=False)
     event_name = Column(String, unique=False, index=True, nullable=False)
     description = Column(Text, nullable=True)
