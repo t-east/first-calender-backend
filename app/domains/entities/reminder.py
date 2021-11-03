@@ -1,6 +1,6 @@
 from typing import Optional
 import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class ReminderBase(BaseModel):
