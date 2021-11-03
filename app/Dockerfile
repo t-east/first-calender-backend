@@ -1,6 +1,7 @@
 FROM python:3.8.12-slim
 WORKDIR /app
 RUN apt-get -y update && \
+  apt-get install -y python3-dev default-libmysqlclient-dev build-essential gcc && \
   apt-get autoremove -y && \
   apt-get clean
 ENV LANG en_US.utf8
