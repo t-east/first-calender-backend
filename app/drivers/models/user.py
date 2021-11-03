@@ -1,10 +1,4 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    DateTime,
-    Date
-)
+from sqlalchemy import Column, Integer, String, DateTime, Date
 
 from app.drivers.base import Base
 
