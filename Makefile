@@ -12,11 +12,11 @@ flake8:
 
 # mypyによる型チェックの実行
 mypy:
-	docker-compose -f docker-compose.yml run --rm fastapi mypy .
+	docker-compose -f docker-compose.yml run --rm fastapi mypy app
 
 # blackによるフォーマット修正
 black:
-	docker-compose -f docker-compose.yml run --rm fastapi black .
+	docker-compose -f docker-compose.yml run --rm fastapi black app
 
 # テスト実行
 test:
