@@ -22,10 +22,10 @@ jobs:
         poetry config virtualenvs.create false
         poetry install
         poetry export -f requirements.txt --output requirements.txt
+        cd ../
 
     - name: Lint
       run: |
-        pip install black==21.9b0 flake8==4.0.1 mypy==0.910 types-requests==2.25.11 types-PyYAML==5.4.12
-        flake8 .
-        mypy .
-        black --check .
+        pip install black==21.9b0 mypy==0.910 types-requests==2.25.11 types-PyYAML==5.4.12
+        mypy app
+        black --check app
