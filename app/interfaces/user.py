@@ -30,7 +30,9 @@ class SQLUserRepository(usecases.IUserRepository):
     def create(self, obj_in: entities.UserCreate) -> entities.User:
         pass  # ユーザ登録の処理で入力したentities.UserCreateの型をmodelsの型にしてdbに保存．その後取り出したものをentities.Userになおして出力
 
-    def update(self, id: int, obj_in: Union[entities.UserUpdate, Dict[str, Any]]) -> Optional[entities.User]:
+    def update(
+        self, id: int, obj_in: Union[entities.UserUpdate, Dict[str, Any]]
+    ) -> Optional[entities.User]:
         pass  # idと変更内容を含むentities.UserUpdateを用いて，DBを更新，entities.UserUpdateになおしてreturn
 
     def delete(self, id: int) -> Optional[entities.User]:
