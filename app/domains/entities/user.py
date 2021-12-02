@@ -13,6 +13,11 @@ class UserCreate(UserBase):
     password: str
 
 
+class UserAuth(BaseModel):
+    email: EmailStr
+    password: str
+
+
 class UserUpdate(UserBase):
     password: str
 

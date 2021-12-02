@@ -10,10 +10,6 @@ class IUserRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_by_email(self, email: str) -> Optional[entities.User]:
-        raise NotImplementedError
-
-    @abc.abstractmethod
     def create(self, obj_in: entities.UserCreate) -> entities.User:
         raise NotImplementedError
 
@@ -28,7 +24,7 @@ class IUserRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def authenticate(self, email: str, password: str) -> Optional[entities.User]:
+    def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
         raise NotImplementedError
 
 
@@ -41,8 +37,9 @@ class UserUsecase:
     def get(self, id: int) -> Optional[entities.User]:
         return self.repo.get(id=id)
 
-    def get_by_email(self, email: str) -> Optional[entities.User]:
-        return self.repo.get_by_email(email=email)
+    # 　他のユーザがメールアドレスを介してイベントを共有できる時にあったらいいかも
+    # def get_by_email(self, email: str) -> Optional[str]:
+    #     return self.repo.get_by_email(email=email)
 
     def create(self, obj_in: entities.UserCreate) -> entities.User:
         return self.repo.create(obj_in=obj_in)
@@ -55,5 +52,5 @@ class UserUsecase:
     def delete(self, id: int) -> Optional[entities.User]:
         return self.repo.delete(id=id)
 
-    def authenticate(self, email: str, password: str) -> Optional[entities.User]:
-        return self.repo.authenticate(email=email, password=password)
+    def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
+        return self.repo.authenticate(auth_in=auth_in)
