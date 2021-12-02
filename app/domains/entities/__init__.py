@@ -6,3 +6,11 @@ from app.domains.entities.user import (
     User,
     UserInDB,
 )
+from app.domains.entities.event import (
+    EventBase,
+    EventCreate,
+    EventUpdate,
+    EventInDBBase,
+    Event,
+    ListEventsResponse,
+)
