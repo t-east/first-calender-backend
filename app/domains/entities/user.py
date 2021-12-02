@@ -12,6 +12,7 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
 
+
 class UserUpdate(UserBase):
     password: str
 
@@ -22,8 +23,10 @@ class UserInDBBase(UserBase):
     class Config:
         orm_mode = True
 
+
 class User(UserInDBBase):
     pass
+
 
 class UserInDB(UserInDBBase):
     password: str
