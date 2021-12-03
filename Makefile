@@ -8,7 +8,7 @@ dev:
 
 # Flake8のLinter実行
 flake8:
-	docker-compose -f docker-compose.yml run --rm fastapi flake8
+	docker-compose -f docker-compose.yml run --rm fastapi flake8 app
 
 # mypyによる型チェックの実行
 mypy:

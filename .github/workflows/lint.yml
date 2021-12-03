@@ -26,6 +26,7 @@ jobs:
 
     - name: Lint
       run: |
-        pip install black==21.9b0 mypy==0.910 types-requests==2.25.11 types-PyYAML==5.4.12
+        pip install black==21.9b0 mypy==0.910 flake8==3.9.2 types-requests==2.25.11 types-PyYAML==5.4.12
         mypy app
         black --check app
+        flake8 app
