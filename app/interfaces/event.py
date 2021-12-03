@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional, Union
 
 # from fastapi.encoders import jsonable_encoder
-# from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 
 import app.domains.entities as entities
 import app.drivers.rdb.models as models
@@ -12,7 +12,7 @@ import app.usecases as usecases
 
 # ここで記述処理は，型の変換と最小限のエラー処理．メインロジックはusecaseが担当するのであまり余計な事は書かない．
 class SQLEventRepository(usecases.IEventRepository):
-    def __init__(self) -> None:
+    def __init__(self, db: Session) -> None:
         pass
 
     def _get_by_id(self, id: int) -> Optional[models.Event]:
