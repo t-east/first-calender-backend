@@ -5,18 +5,28 @@ from pydantic import BaseModel, EmailStr, Field
 
 class UserBase(BaseModel):
     user_name: str = Field(max_length=12)
-    password_hash: str
     email: Optional[EmailStr]
     birthday: datetime.date
+
+
+class UserCreate(UserBase):
+    password: str
+
+
+class UserUpdate(UserBase):
+    password: str
+
+
+class UserInDBBase(UserBase):
+    id: int
 
     class Config:
         orm_mode = True
 
 
-class UserCreate(UserBase):
-    email: EmailStr
-    password: str
-
-
-class UserUpdate(UserBase):
+class User(UserInDBBase):
     pass
+
+
+class UserInDB(UserInDBBase):
+    password: str
