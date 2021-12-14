@@ -1,12 +1,12 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import Dict, List, Optional
+from typing import Optional
 
 import app.domains.entities as entities
 import app.usecases as usecases
 import app.interfaces as interfaces
 
-from .database import SessionLocal, engine
+from drivers.base import SessionLocal
 
 # models.Base.metadata.create_all(bind=engine)
 

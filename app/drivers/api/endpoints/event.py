@@ -1,12 +1,11 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import Dict, List, Optional
+from typing import Optional
 
 import app.domains.entities as entities
 import app.usecases as usecases
 import app.interfaces as interfaces
-
-from .database import SessionLocal, engine
+from drivers.base import SessionLocal
 
 # models.Base.metadata.create_all(bind=engine)
 
@@ -58,7 +57,7 @@ async def get_event(
     user_id: int,
     eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> Optional[entities.Event]:
-    selected_event: Optional[entities.Event] = eu.get(id=event_id, user_id=user_id)
+    selected_event: Optional[entities.Event] = eu.read(id=event_id, user_id=user_id)
     if selected_event is None:
         raise HTTPException(status_code=404)
     return selected_event

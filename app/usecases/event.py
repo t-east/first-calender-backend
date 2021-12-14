@@ -6,7 +6,7 @@ import app.domains.entities as entities
 
 class IEventRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def get(self, id: int, user_id: int) -> Optional[entities.Event]:
+    def read(self, id: int, user_id: int) -> Optional[entities.Event]:
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -34,8 +34,8 @@ class EventUsecase:
     def __init__(self, repo: IEventRepository) -> None:
         self.repo = repo
 
-    def get(self, id: int, user_id: int) -> Optional[entities.Event]:
-        return self.repo.get(id=id, user_id=user_id)
+    def read(self, id: int, user_id: int) -> Optional[entities.Event]:
+        return self.repo.read(id=id, user_id=user_id)
 
     def create(self, obj_in: entities.EventCreate) -> entities.Event:
         return self.repo.create(obj_in=obj_in)
