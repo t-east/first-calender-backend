@@ -15,23 +15,23 @@ services:
     volumes:
       - .:/app
 
-  # mysql:
-  #   image: mysql:8.0.21
-  #   platform: linux/x86_64
-  #   ports:
-  #   - 3306:3306
-  #   restart: always
-  #   volumes:
-  #     # 永続化するときにマウントするディレクトリ
-  #     - ./mysql/mysql_data:/var/lib/mysql
-  #     - ./mysql/mysql_conf/:/etc/mysql/conf.d
-  #   environment:
-  #     MYSQL_DATABASE: question_db
-  #     MYSQL_ROOT_PASSWORD: password
-  #     MYSQL_USER: root
-  #     MYSQL_PASSWORD: password
-  #   command: mysqld --explicit_defaults_for_timestamp=true
-  #   healthcheck:
-  #     test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-  #     timeout: 20s
-  #     retries: 10
+  mysql:
+    image: mysql:8.0.21
+    platform: linux/x86_64
+    ports:
+    - 3306:3306
+    restart: always
+    volumes:
+      # 永続化するときにマウントするディレクトリ
+      - ./mysql/mysql_data:/var/lib/mysql
+      - ./mysql/mysql_conf/:/etc/mysql/conf.d
+    environment:
+      MYSQL_DATABASE: question_db
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    command: mysqld --explicit_defaults_for_timestamp=true
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
