@@ -16,5 +16,7 @@ class User(Base):
 
     birthday = Column(Date, nullable=True, index=True)
 
-    resistered_at = Column(DateTime, nullable=False)
+    registered_at = Column(DateTime, nullable=False)
     last_login_at = Column(DateTime, nullable=True)
+
+    updated_at = Column(DateTime, nullable=True)

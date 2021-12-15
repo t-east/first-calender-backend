@@ -21,6 +21,7 @@ def create_user(db: Session, user: schemas.User) -> models.User:
         user_image=user.profile_image_path,
         user_birthday=user.birthday,
     )
+
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

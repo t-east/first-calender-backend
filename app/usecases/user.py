@@ -6,7 +6,7 @@ import app.domains.entities as entities
 
 class IUserRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def get(self, id: int) -> Optional[entities.User]:
+    def read(self, id: int) -> Optional[entities.User]:
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -34,8 +34,8 @@ class UserUsecase:
     def __init__(self, repo: IUserRepository) -> None:
         self.repo = repo
 
-    def get(self, id: int) -> Optional[entities.User]:
-        return self.repo.get(id=id)
+    def read(self, id: int) -> Optional[entities.User]:
+        return self.repo.read(id=id)
 
     # 　他のユーザがメールアドレスを介してイベントを共有できる時にあったらいいかも
     # def get_by_email(self, email: str) -> Optional[str]:

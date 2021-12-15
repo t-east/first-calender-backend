@@ -29,7 +29,8 @@ class EventInDBBase(EventBase):
 
 
 class Event(EventInDBBase):
-    pass
+    class Config:
+        orm_mode = True
 
 
 class ListEventsResponse(BaseModel):
