@@ -5,6 +5,7 @@ from typing import Dict, Optional
 import app.domains.entities as entities
 import app.usecases as usecases
 import app.interfaces as interfaces
+from drivers.models.base import SessionLocal
 
 # models.Base.metadata.create_all(bind=engine)
 
@@ -64,7 +65,7 @@ async def delete_user(
         raise HTTPException(status_code=404)
     return deleted_user
 
+
 @router.get("/", response_model=str)
 async def test_user() -> str:
     return "aaa"
-

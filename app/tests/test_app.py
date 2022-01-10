@@ -17,6 +17,7 @@ from app.main import app
 
 client = TestClient(app)
 
+
 def load_fixtures(db: scoped_session, path: str) -> None:
     with open(path, "r") as f:
         data: List[Dict[str, Any]] = yaml.load(f, Loader=yaml.FullLoader)
@@ -53,6 +54,6 @@ def db() -> Generator:
 
 
 @pytest.fixture(scope="module")
-def client() -> Generator:
+def clients() -> Generator:
     with TestClient(app) as c:
         yield c
