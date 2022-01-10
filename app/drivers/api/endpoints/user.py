@@ -11,6 +11,7 @@ from drivers.models.base import SessionLocal
 
 router = APIRouter()
 
+
 def get_db() -> Session:
     db = SessionLocal()
     try:
