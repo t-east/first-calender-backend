@@ -1,16 +1,13 @@
 import os
-from datetime import timedelta
-from typing import Any, Dict, Generator, List, Optional
+from typing import Any, Dict, Generator, List
 
 import pytest
 import yaml
 from fastapi.testclient import TestClient
-from pytest_mock.plugin import MockerFixture
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-from app.core.config import settings
-from app.drivers.api.endpoints.user import get_db, get_user_usecase
+from app.drivers.api.endpoints.user import get_db
 from app.drivers.models.base import Base
 from app.drivers.models.init_db import init_db
 from app.main import app
