@@ -1,8 +1,5 @@
-import random
-import string
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict
 
-import requests
 from fastapi.testclient import TestClient
 from requests.models import Response
 

@@ -1,9 +1,7 @@
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict
 
 import requests
 from fastapi.testclient import TestClient
-from requests.models import Response
-from sqlalchemy.orm.scoping import scoped_session
 
 from app.tests.utils import StatusCode
 
@@ -68,54 +66,54 @@ def test_post_event_invalid_date(client: TestClient) -> None:
 
 
 def test_get_event_list__by_user_id(client: TestClient) -> None:
-    user_id = 1
+    # user_id = 1
     r: requests.Response = client.get("/api/event/")
     assert r.status_code == StatusCode.OK
 
 
 def test_get_event_list__by_user_id_error(client: TestClient) -> None:
-    user_id = 100
+    # user_id = 100
     r: requests.Response = client.get("/api/event/")
     assert r.status_code == StatusCode.OK
 
 
 def test_get_event(client: TestClient) -> None:
     event_id = 1
-    user_id = 1
+    # user_id = 1
     r: requests.Response = client.get(f"/api/event/{event_id}")
     assert r.status_code == StatusCode.OK
 
 
 def test_get_event_error_invalid_user(client: TestClient) -> None:
     event_id = 1
-    user_id = 2
+    # user_id = 2
     r: requests.Response = client.get(f"/api/event/{event_id}")
     assert r.status_code == StatusCode.BadRequest
 
 
 def test_get_event_error(client: TestClient) -> None:
     event_id = 100
-    user_id = 1
+    # user_id = 1
     r: requests.Response = client.get(f"/api/event/{event_id}")
     assert r.status_code == StatusCode.BadRequest
 
 
 def test_delete_event_error_invalid_user(client: TestClient) -> None:
     event_id = 1
-    user_id = 2
+    # user_id = 2
     r: requests.Response = client.delete(f"/api/event/{event_id}")
     assert r.status_code == StatusCode.BadRequest
 
 
 def test_delete_event_error(client: TestClient) -> None:
     event_id = 100
-    user_id = 1
+    # user_id = 1
     r: requests.Response = client.delete(f"/api/event/{event_id}")
     assert r.status_code == StatusCode.BadRequest
 
 
 def test_delete_event(client: TestClient) -> None:
     event_id = 1
-    user_id = 1
+    # user_id = 1
     r: requests.Response = client.delete(f"/api/event/{event_id}")
     assert r.status_code == StatusCode.OK
