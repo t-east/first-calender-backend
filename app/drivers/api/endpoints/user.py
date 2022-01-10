@@ -1,6 +1,6 @@
 from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
-from typing import Dict, Optional
+from typing import Optional
 
 import app.domains.entities as entities
 import app.usecases as usecases
