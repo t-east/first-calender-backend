@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.endpoints import (
+from app.drivers.api.endpoints import (
     user,
     event,
 )

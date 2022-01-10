@@ -1,17 +1,14 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
-from typing import Optional
+from typing import Dict, Optional
 
 import app.domains.entities as entities
 import app.usecases as usecases
 import app.interfaces as interfaces
 
-from drivers.base import SessionLocal
-
 # models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
-
+router = APIRouter()
 
 def get_db() -> Session:
     db = SessionLocal()
@@ -26,7 +23,7 @@ def get_user_usecase(db: Session = Depends(get_db)) -> usecases.UserUsecase:
     return usecases.UserUsecase(repo)
 
 
-@app.post("/", response_model=entities.User)
+@router.post("", response_model=entities.User)
 async def create_user(
     *,
     user_in: entities.UserCreate,
@@ -35,7 +32,7 @@ async def create_user(
     return uu.create(obj_in=user_in)
 
 
-@app.post("/login", response_model=entities.User)
+@router.post("/login", response_model=entities.User)
 async def login_user(
     *, auth_in: entities.UserAuth, uu: usecases.UserUsecase = Depends(get_user_usecase)
 ) -> entities.User:
@@ -45,7 +42,7 @@ async def login_user(
     return logined_user
 
 
-@app.put("/", response_model=entities.User)
+@router.put("", response_model=entities.User)
 async def update_user(
     *,
     id: int,
@@ -58,7 +55,7 @@ async def update_user(
     return updated_user
 
 
-@app.delete("/", response_model=entities.User)
+@router.delete("", response_model=entities.User)
 async def delete_user(
     *, id: int, uu: usecases.UserUsecase = Depends(get_user_usecase)
 ) -> entities.User:
@@ -66,3 +63,8 @@ async def delete_user(
     if deleted_user is None:
         raise HTTPException(status_code=404)
     return deleted_user
+
+@router.get("/", response_model=str)
+async def test_user() -> str:
+    return "aaa"
+

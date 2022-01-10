@@ -3,3 +3,4 @@ mysql/mysql_data/*
 app/__pycache__
 app/.mypy_cache
 app/.DS_Store
+__pycache__/
