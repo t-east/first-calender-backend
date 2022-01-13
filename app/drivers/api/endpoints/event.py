@@ -1,15 +1,15 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import Optional
 
 import app.domains.entities as entities
 import app.usecases as usecases
 import app.interfaces as interfaces
-from drivers.base import SessionLocal
+from drivers.models.base import SessionLocal
 
 # models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+router = APIRouter()
 
 
 def get_db() -> Session:
@@ -25,7 +25,7 @@ def get_event_usecase(db: Session = Depends(get_db)) -> usecases.EventUsecase:
     return usecases.EventUsecase(repo)
 
 
-@app.post("/", response_model=entities.Event)
+@router.post("/", response_model=entities.Event)
 async def create_event(
     *,
     event_in: entities.EventCreate,
@@ -34,7 +34,7 @@ async def create_event(
     return eu.create(obj_in=event_in)
 
 
-@app.put("/", response_model=entities.Event)
+@router.put("/", response_model=entities.Event)
 async def update_event(
     *,
     id: int,
@@ -50,7 +50,7 @@ async def update_event(
     return updated_event
 
 
-@app.get("/{event_id}", response_model=entities.Event)
+@router.get("/{event_id}", response_model=entities.Event)
 async def get_event(
     *,
     event_id: int,
@@ -63,14 +63,14 @@ async def get_event(
     return selected_event
 
 
-@app.get("/", response_model=entities.ListEventsResponse)
+@router.get("/", response_model=entities.ListEventsResponse)
 async def get_events(
     *, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> entities.ListEventsResponse:
     return eu.get_list(user_id=user_id)
 
 
-@app.delete("/", response_model=entities.Event)
+@router.delete("/", response_model=entities.Event)
 async def delete_event(
     *, id: int, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> Optional[entities.Event]:
