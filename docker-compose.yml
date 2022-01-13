@@ -26,7 +26,7 @@ services:
       - ./mysql/mysql_data:/var/lib/mysql
       - ./mysql/mysql_conf/:/etc/mysql/conf.d
     environment:
-      MYSQL_DATABASE: question_db
+      MYSQL_DATABASE: calender
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: root
       MYSQL_PASSWORD: password

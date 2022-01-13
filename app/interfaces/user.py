@@ -50,7 +50,7 @@ class SQLUserRepository(usecases.IUserRepository):
             user_name=obj_in.user_name,
             email=obj_in.email,
             birthday=obj_in.birthday,
-            password=hashlib.sha256(obj_in.password.encode()).hexdigest(),
+            password_hash=hashlib.sha256(obj_in.password.encode()).hexdigest(),
         )
         self.db.add(db_user)
         self.db.commit()
