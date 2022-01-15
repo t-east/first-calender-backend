@@ -7,9 +7,9 @@ services:
     restart: always
     command: >
       bash -c "uvicorn app.main:app --reload --host 0.0.0.0 --port 8080"
-    # depends_on:
-      # mysql:
-      #   condition: service_healthy
+    depends_on:
+      mysql:
+        condition: service_healthy
     ports:
       - 8080:8080
     volumes:
@@ -18,13 +18,14 @@ services:
   mysql:
     image: mysql:8.0.21
     platform: linux/x86_64
+    container_name: mysql
     ports:
     - 3306:3306
     restart: always
     volumes:
       # 永続化するときにマウントするディレクトリ
       - ./mysql/mysql_data:/var/lib/mysql
-      - ./mysql/mysql_conf/:/etc/mysql/conf.d
+      - ./mysql/mysql_conf/my.cnf/:/etc/mysql/conf.d
     environment:
       MYSQL_DATABASE: calender
       MYSQL_ROOT_PASSWORD: password

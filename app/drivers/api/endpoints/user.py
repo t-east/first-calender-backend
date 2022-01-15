@@ -6,8 +6,11 @@ import app.domains.entities as entities
 import app.usecases as usecases
 import app.interfaces as interfaces
 from app.drivers.models.base import SessionLocal
+from app.drivers.models.base import ENGINE, session, Base
+from app.drivers.models.test import TestUserTable
+from app.domains.entities.test import TestUser
 
-# models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=ENGINE)
 
 router = APIRouter()
 
@@ -70,3 +73,19 @@ async def delete_user(
 @router.get("/", response_model=str)
 async def test_user() -> str:
     return "aaa"
+
+
+# ユーザー情報取得(id指定)
+@router.get("/api/test/{id}")
+def get_user(user_id: int):
+    user = session.query(TestUserTable).\
+        filter(TestUserTable.id == user_id).first()
+    return user
+
+# ユーザー情報登録
+@router.post("/api/test")
+def post_user(user: TestUser):
+    db_test_user = TestUser(name=user.name,
+                            email=user.email)
+    session.add(db_test_user)
+    session.commit()
