@@ -8,6 +8,7 @@ import app.drivers.models.user as models
 import hashlib
 from fastapi import HTTPException
 from datetime import datetime
+from app.drivers.models.base import session
 
 # from pydantic import constr
 
@@ -45,16 +46,29 @@ class SQLUserRepository(usecases.IUserRepository):
             return None
         return get_user_model
 
+    # def create(self, obj_in: entities.UserCreate) -> entities.User:
+    #     db_user = models.User(
+    #         user_name=obj_in.user_name,
+    #         email=obj_in.email,
+    #         birthday=obj_in.birthday,
+    #         # password_hash=hashlib.sha256(obj_in.password.encode()).hexdigest(),
+    #     )
+    #     self.db.add(db_user)
+    #     self.db.commit()
+    #     self.db.refresh(db_user)
+    #     db_user_entities = entities.User.from_orm(db_user)
+    #     return db_user_entities
+
     def create(self, obj_in: entities.UserCreate) -> entities.User:
         db_user = models.User(
             user_name=obj_in.user_name,
             email=obj_in.email,
             birthday=obj_in.birthday,
-            password_hash=hashlib.sha256(obj_in.password.encode()).hexdigest(),
+            # password_hash=hashlib.sha256(obj_in.password.encode()).hexdigest(),
         )
-        self.db.add(db_user)
-        self.db.commit()
-        self.db.refresh(db_user)
+        session.add(db_user)
+        session.commit()
+        session.refresh(db_user)
         db_user_entities = entities.User.from_orm(db_user)
         return db_user_entities
 

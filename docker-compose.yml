@@ -8,6 +8,7 @@ services:
     command: >
       bash -c "uvicorn app.main:app --reload --host 0.0.0.0 --port 8080"
     depends_on:
+      #  - mysql
       mysql:
         condition: service_healthy
     ports:
@@ -22,10 +23,13 @@ services:
     ports:
     - 3306:3306
     restart: always
+    # command: --port 3308
+    tty: true
     volumes:
       # 永続化するときにマウントするディレクトリ
       - ./mysql/mysql_data:/var/lib/mysql
-      - ./mysql/mysql_conf/my.cnf/:/etc/mysql/conf.d
+      - ./mysql/mysql_conf/my.cnf/:/etc/mysql/conf.d/my.cnf
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
     environment:
       MYSQL_DATABASE: calender
       MYSQL_ROOT_PASSWORD: password

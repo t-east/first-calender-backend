@@ -12,7 +12,7 @@ class User(Base):
     password_hash = Column(String(1024), nullable=False)
     email = Column(String(256), unique=True, index=True, nullable=False)
 
-    profile_image_path = Column(String, nullable=True)
+    profile_image_path = Column(String(1024), nullable=True)
 
     birthday = Column(Date, nullable=True, index=True)
 

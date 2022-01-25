@@ -4,37 +4,26 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
 
-host = "db:3308"
-db_name = "sample_db"
-user = "mysqluser"
-password = "mysqlpass"
+host = "mysql:3306"
+db_name = "calender"
+user = "root"
+password = "password"
 
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 # )
 
 
-
-DATABASE = 'mysql://%s:%s@%s/%s?charset=utf8' % (
+DATABASE = "mysql://%s:%s@%s/%s?charset=utf8" % (
     user,
     password,
     host,
     db_name,
 )
 
-ENGINE = create_engine(
-    DATABASE,
-    encoding="utf-8",
-    echo=True
-)
+ENGINE = create_engine(DATABASE, encoding="utf-8", echo=True)
 
-session = scoped_session(
-    sessionmaker(
-        autocommit=False,
-        autoflush=False,
-        bind=ENGINE
-    )
-)
+session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=ENGINE))
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=ENGINE)
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
