@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Date
 
-from app.drivers.models.base import Base, ENGINE
+from app.drivers.models.base import Base
 
 
 class User(Base):

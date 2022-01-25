@@ -5,7 +5,8 @@ from sqlalchemy.orm import Session
 
 import app.domains.entities as entities
 import app.drivers.models.user as models
-import hashlib
+
+# import hashlib
 from fastapi import HTTPException
 from datetime import datetime
 from app.drivers.models.base import session

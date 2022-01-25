@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from sqlalchemy import String
 from starlette.middleware.cors import CORSMiddleware
-import uvicorn
 
 from app.drivers.api.urls import api_router
 
