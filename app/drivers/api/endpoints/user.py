@@ -60,10 +60,10 @@ async def get_user(
         raise HTTPException(status_code=404)
     return user
 
+
 @router.get("/", response_model=entities.User)
 async def get_all_user(
     *, uu: usecases.UserUsecase = Depends(get_user_usecase)
 ) -> entities.User:
     user: List[Optional[entities.User]] = uu.read_all()
     return user
-

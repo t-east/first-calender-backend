@@ -22,6 +22,8 @@ DATABASE: str = "mysql://%s:%s@%s/%s?charset=utf8" % (
 
 ENGINE = create_engine(DATABASE, encoding="utf-8", echo=True)
 
-SessionLocal = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=ENGINE))
+SessionLocal = scoped_session(
+    sessionmaker(autocommit=False, autoflush=False, bind=ENGINE)
+)
 
 Base = declarative_base()

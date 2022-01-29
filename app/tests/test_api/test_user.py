@@ -6,8 +6,13 @@ from sqlalchemy.orm.scoping import scoped_session
 from app.tests.utils import StatusCode
 from app.main import app
 
+
 def post_user(
-    client: TestClient, db: scoped_session, email: str, password: str = "test", user_name: str = "田中"
+    client: TestClient,
+    db: scoped_session,
+    email: str,
+    password: str = "test",
+    user_name: str = "田中",
 ) -> Response:
     data: Dict[str, Any] = {
         "user_name": user_name,
@@ -29,10 +34,12 @@ def test_create_user(client: TestClient, db: scoped_session) -> None:
     resp: Dict[str, Any] = r.json()
     assert resp["email"] == data["email"]
 
+
 def test_read_user(client: TestClient, db: scoped_session) -> None:
     id: int = 1
     r = client.get(f"/api/user/{id}")
     assert r.status_code == StatusCode.OK
+
 
 # 登録済みのemailでの登録をはじく
 def test_create_user_error(client: TestClient, db: scoped_session) -> None:
@@ -49,4 +56,3 @@ def test_delete_user_error(client: TestClient, db: scoped_session) -> None:
 def test_delete_user(client: TestClient, db: scoped_session) -> None:
     r = client.delete("/api/user/2")
     assert r.status_code == StatusCode.OK
-

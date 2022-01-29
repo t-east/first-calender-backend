@@ -50,7 +50,7 @@ class SQLUserRepository(usecases.IUserRepository):
             user_name=obj_in.user_name,
             email=obj_in.email,
             password_hash=hashlib.sha256(obj_in.password.encode()).hexdigest(),
-            registered_at= datetime.now()
+            registered_at=datetime.now(),
         )
         get_user_by_email = self._get_by_email(db_user.email)
         if get_user_by_email:
