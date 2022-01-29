@@ -17,7 +17,3 @@ app.add_middleware(
 
 app.include_router(api_router)
 
-
-@app.get("/")
-async def root() -> String:
-    return {"message": "Hello Calendere Applications!"}
