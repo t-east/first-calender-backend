@@ -1,3 +1,4 @@
+from lib2to3.pgen2.token import OP
 from typing import Optional, List
 import datetime
 from pydantic import BaseModel, Field
@@ -14,15 +15,16 @@ class EventBase(BaseModel):
 
 class EventCreate(EventBase):
     user_id: Optional[int]
+    tag_id: Optional[int]
 
 
 class EventUpdate(EventBase):
     pass
 
-
 class EventInDBBase(EventBase):
     id: int
     user_id: int
+    tag_id: int
 
     class Config:
         orm_mode = True

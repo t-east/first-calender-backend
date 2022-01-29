@@ -75,3 +75,17 @@ async def delete_event(
     if deleted_event is None:
         raise HTTPException(status_code=404)
     return deleted_event
+
+
+@router.get("/{event_id}/tag/{tag_id}", response_model=entities.ListEventsResponse)
+async def get_events(
+    *, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
+) -> entities.ListEventsResponse:
+    return eu.get_list(user_id=user_id)
+
+
+@router.post("/{event_id}/tag/", response_model=entities.ListEventsResponse)
+async def get_events(
+    *, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
+) -> entities.ListEventsResponse:
+    return eu.get_list(user_id=user_id)
