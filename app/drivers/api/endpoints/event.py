@@ -1,25 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Optional
-
 import app.domains.entities as entities
 import app.usecases as usecases
-import app.interfaces as interfaces
-from app.drivers.rdb.base import Session
+from app.drivers.api.deps import get_event_usecase
 
 router = APIRouter()
-
-
-def get_db() -> Session:
-    db = Session()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-def get_event_usecase(db: Session = Depends(get_db)) -> usecases.EventUsecase:
-    repo: usecases.IEventRepository = interfaces.SQLEventRepository(db)
-    return usecases.EventUsecase(repo)
 
 
 @router.post("/", response_model=entities.Event)
