@@ -5,3 +5,4 @@ app/.mypy_cache
 app/.DS_Store
 __pycache__/
 .coverage
+test_temp.db
