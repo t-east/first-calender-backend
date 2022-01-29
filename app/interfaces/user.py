@@ -67,9 +67,9 @@ class SQLUserRepository(usecases.IUserRepository):
             birthday=obj_in.birthday,
             # password_hash=hashlib.sha256(obj_in.password.encode()).hexdigest(),
         )
-        session.add(db_user)
-        session.commit()
-        session.refresh(db_user)
+        Session.add(db_user)
+        Session.commit()
+        Session.refresh(db_user)
         db_user_entities = entities.User.from_orm(db_user)
         return db_user_entities
 

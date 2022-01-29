@@ -10,6 +10,7 @@ class DBSettings(BaseSettings):
     user = "root"
     password = "password"
 
+
 settings = DBSettings()
 
 DATABASE: str = "mysql://%s:%s@%s/%s?charset=utf8" % (
@@ -19,23 +20,12 @@ DATABASE: str = "mysql://%s:%s@%s/%s?charset=utf8" % (
     settings.db_name,
 )
 
-ENGINE = create_engine(
-    DATABASE,
-    encoding = "utf-8",
-    echo=True
-)
+ENGINE = create_engine(DATABASE, encoding="utf-8", echo=True)
 
-Session = scoped_session(
-    sessionmaker(
-        autocommit = False,
-        autoflush = False,
-        bind = ENGINE
-    )
-)
+Session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=ENGINE))
 
 Base = declarative_base()
 Base.query = Session.query_property()
 
 # modelで使用する
 Base = declarative_base()
-

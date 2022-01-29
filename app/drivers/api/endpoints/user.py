@@ -72,7 +72,7 @@ async def test_user() -> str:
 # ユーザー情報取得(id指定)
 @router.get("/test/{id}")
 def get_user(user_id: int) -> TestUser:
-    user = session.query(TestUserTable).filter(TestUserTable.id == user_id).first()
+    user = Session.query(TestUserTable).filter(TestUserTable.id == user_id).first()
     return user
 
 
@@ -80,7 +80,7 @@ def get_user(user_id: int) -> TestUser:
 @router.post("/test", response_model=TestUser)
 def post_user(user: TestUserCreate) -> TestUserCreate:
     db_test_user = TestUserCreate(name=user.name, email=user.email)
-    session.add(db_test_user)
-    session.commit()
-    session.refresh(db_test_user)
+    Session.add(db_test_user)
+    Session.commit()
+    Session.refresh(db_test_user)
     return db_test_user

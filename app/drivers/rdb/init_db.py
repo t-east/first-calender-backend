@@ -19,6 +19,7 @@ def create_user(db: Session, data: dict) -> None:
     db.commit()
     db.refresh(obj_in_db)
 
+
 def init_db(db: Session, fixtures: List[Dict[str, Any]]) -> None:
     for data in fixtures:
         eval(f"create_{data['model']}")(db, data["fields"])
