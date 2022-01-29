@@ -1,38 +1,41 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
-
-# SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
-
-host = "mysql:3306"
-db_name = "calender"
-user = "root"
-password = "password"
-
-# engine = create_engine(
-#     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-# )
+from pydantic import BaseSettings
 
 
-DATABASE = "mysql://%s:%s@%s/%s?charset=utf8" % (
-    user,
-    password,
-    host,
-    db_name,
+class DBSettings(BaseSettings):
+    host: str = "127.0.0.1"
+    db_name = "calendar"
+    user = "root"
+    password = "password"
+
+settings = DBSettings()
+
+DATABASE: str = "mysql://%s:%s@%s/%s?charset=utf8" % (
+    settings.user,
+    settings.password,
+    settings.host,
+    settings.db_name,
 )
 
-ENGINE = create_engine(DATABASE, encoding="utf-8", echo=True)
+ENGINE = create_engine(
+    DATABASE,
+    encoding = "utf-8",
+    echo=True
+)
 
-session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=ENGINE))
+Session = scoped_session(
+    sessionmaker(
+        autocommit = False,
+        autoflush = False,
+        bind = ENGINE
+    )
+)
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=ENGINE)
-# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
-Base.query = session.query_property()
+Base.query = Session.query_property()
 
-def get_db() -> Session:
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# modelで使用する
+Base = declarative_base()
+

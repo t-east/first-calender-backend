@@ -5,7 +5,7 @@ from typing import Optional
 import app.domains.entities as entities
 import app.usecases as usecases
 import app.interfaces as interfaces
-from app.drivers.models.base import SessionLocal
+from app.drivers.rdb.base import Session
 
 # models.Base.metadata.create_all(bind=engine)
 
@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 def get_db() -> Session:
-    db = SessionLocal()
+    db = Session()
     try:
         yield db
     finally:

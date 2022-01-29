@@ -5,27 +5,12 @@ from typing import Optional
 import app.domains.entities as entities
 import app.usecases as usecases
 import app.interfaces as interfaces
-from app.drivers.models.base import SessionLocal
-from app.drivers.models.base import ENGINE, session, Base
-from app.drivers.models.test import TestUserTable
+from app.drivers.rdb.base import ENGINE, Base
+from app.drivers.api.deps import get_user_usecase
+from app.drivers.rdb.models.test import TestUserTable
 from app.domains.entities.test import TestUser, TestUserCreate
 
-Base.metadata.create_all(bind=ENGINE)
-
 router = APIRouter()
-
-
-def get_db() -> Session:
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-def get_user_usecase(db: Session = Depends(get_db)) -> usecases.UserUsecase:
-    repo: usecases.IUserRepository = interfaces.SQLUserRepository(db)
-    return usecases.UserUsecase(repo)
 
 
 # @router.post("/", response_model=entities.User)

@@ -9,7 +9,7 @@ import app.drivers.rdb.models.user as models
 # import hashlib
 from fastapi import HTTPException
 from datetime import datetime
-from app.drivers.rdb.base import session
+from app.drivers.rdb.base import Session
 
 # from pydantic import constr
 
