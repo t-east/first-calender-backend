@@ -4,12 +4,12 @@ from typing import Any, Dict, Optional, Union
 from sqlalchemy.orm import Session
 
 import app.domains.entities as entities
-import app.drivers.models.user as models
+import app.drivers.rdb.models.user as models
 
 # import hashlib
 from fastapi import HTTPException
 from datetime import datetime
-from app.drivers.models.base import session
+from app.drivers.rdb.base import session
 
 # from pydantic import constr
 

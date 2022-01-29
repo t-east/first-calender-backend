@@ -29,3 +29,10 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=ENGINE)
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 Base.query = session.query_property()
+
+def get_db() -> Session:
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
