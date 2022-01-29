@@ -1,11 +1,8 @@
-import datetime
-
 from sqlalchemy.orm import Session
 from typing import Any, Dict, List
 
 import app.drivers.api.deps as deps
 import app.domains.entities as entities
-import app.drivers.rdb.models as models
 
 
 def create_user(db: Session, data: dict) -> None:

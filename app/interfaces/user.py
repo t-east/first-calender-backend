@@ -5,14 +5,8 @@ import app.drivers.rdb.models.user as models
 import hashlib
 from datetime import datetime
 from fastapi import HTTPException
-from datetime import datetime
 from sqlalchemy.orm import Session
 
-# from pydantic import constr
-
-
-# from app.drivers.security import get_password_hash, verify_password
-# from app.drivers.sqlalchemy_to_pydantic import sqlalchemy_to_pydantic
 import app.usecases as usecases
 
 

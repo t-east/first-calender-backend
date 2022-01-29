@@ -1,10 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Optional
-from sqlalchemy.orm import Session
-
 import app.domains.entities as entities
 import app.usecases as usecases
-import app.interfaces as interfaces
 from app.drivers.api.deps import get_event_usecase
 
 router = APIRouter()

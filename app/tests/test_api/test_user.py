@@ -4,7 +4,6 @@ from fastapi.testclient import TestClient
 from requests.models import Response
 from sqlalchemy.orm.scoping import scoped_session
 from app.tests.utils import StatusCode
-from app.main import app
 
 
 def post_user(

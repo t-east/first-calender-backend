@@ -1,6 +1,5 @@
 from fastapi import Depends, HTTPException, APIRouter
-from sqlalchemy.orm import Session
-from typing import Optional, List
+from typing import Optional
 
 import app.domains.entities as entities
 import app.usecases as usecases
@@ -58,12 +57,4 @@ async def get_user(
     user: Optional[entities.User] = uu.read(id=id)
     if user is None:
         raise HTTPException(status_code=404)
-    return user
-
-
-@router.get("/", response_model=entities.User)
-async def get_all_user(
-    *, uu: usecases.UserUsecase = Depends(get_user_usecase)
-) -> entities.User:
-    user: List[Optional[entities.User]] = uu.read_all()
     return user

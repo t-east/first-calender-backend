@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Date
+from sqlalchemy import Column, Integer, String, DateTime
 
 from app.drivers.rdb.base import Base
 
