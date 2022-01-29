@@ -4,8 +4,6 @@ from typing import Optional
 
 import app.domains.entities as entities
 import app.usecases as usecases
-import app.interfaces as interfaces
-from app.drivers.rdb.base import ENGINE, Base
 from app.drivers.api.deps import get_user_usecase
 from app.drivers.rdb.models.test import TestUserTable
 from app.domains.entities.test import TestUser, TestUserCreate

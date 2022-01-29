@@ -1,8 +1,5 @@
 from typing import Any, Dict, Optional, Union
 
-# from fastapi.encoders import jsonable_encoder
-from sqlalchemy.orm import Session
-
 import app.domains.entities as entities
 import app.drivers.rdb.models.user as models
 
