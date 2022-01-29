@@ -1,18 +1,15 @@
-import os
 from typing import Any, Dict, Generator, List
 
 import pytest
 import yaml
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
+from sqlalchemy_utils import database_exists, drop_database
+from app.drivers.rdb.init_db import init_db
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-from app.drivers.api.endpoints.user import get_db
-from app.drivers.models.base import Base
-from app.drivers.models.init_db import init_db
+from app.drivers.rdb.base import Base
 from app.main import app
-
-client = TestClient(app)
 
 
 def load_fixtures(db: scoped_session, path: str) -> None:
@@ -22,35 +19,29 @@ def load_fixtures(db: scoped_session, path: str) -> None:
 
 
 @pytest.fixture(scope="function")
-def db() -> Generator:
-
+def SessionLocal() -> Generator:
     # settings of test database
-    TEST_SQLALCHEMY_DATABASE_URL: str = "sqlite:///./test.db"
+    TEST_SQLALCHEMY_DATABASE_URL = "sqlite:///./test_temp.db"
     engine = create_engine(
         TEST_SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
     )
 
+    assert not database_exists(
+        TEST_SQLALCHEMY_DATABASE_URL
+    ), "Test database already exists. Aborting tests."
+
     # Create test database and tables
     Base.metadata.create_all(engine)
-    db = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-    file_path: str = os.path.join(os.path.dirname(__file__), "db", "db.yaml")
-    load_fixtures(db, file_path)
+    # Run the tests
+    yield SessionLocal
 
-    def override_get_db() -> Generator:
-        try:
-            db_ = db()
-            yield db_
-        finally:
-            db_.close()
-
-    app.dependency_overrides[get_db] = override_get_db
-    yield db
-    app.dependency_overrides[get_db] = get_db
-    Base.metadata.drop_all(bind=engine)
+    # Drop the test database
+    drop_database(TEST_SQLALCHEMY_DATABASE_URL)
 
 
 @pytest.fixture(scope="module")
-def clients() -> Generator:
+def client() -> Generator:
     with TestClient(app) as c:
         yield c

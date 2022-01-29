@@ -4,28 +4,23 @@ from typing import Optional
 
 import app.domains.entities as entities
 import app.usecases as usecases
-import app.interfaces as interfaces
-from app.drivers.models.base import SessionLocal
-
-# models.Base.metadata.create_all(bind=engine)
+from app.drivers.api.deps import get_user_usecase
+from app.drivers.rdb.models.test import TestUserTable
+from app.domains.entities.test import TestUser, TestUserCreate
 
 router = APIRouter()
 
 
-def get_db() -> Session:
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# @router.post("/", response_model=entities.User)
+# async def create_user(
+#     *,
+#     user_in: entities.UserCreate,
+#     uu: usecases.UserUsecase = Depends(get_user_usecase)
+# ) -> entities.User:
+#     return uu.create(obj_in=user_in)
 
 
-def get_user_usecase(db: Session = Depends(get_db)) -> usecases.UserUsecase:
-    repo: usecases.IUserRepository = interfaces.SQLUserRepository(db)
-    return usecases.UserUsecase(repo)
-
-
-@router.post("", response_model=entities.User)
+@router.post("/", response_model=entities.User)
 async def create_user(
     *,
     user_in: entities.UserCreate,
@@ -44,7 +39,7 @@ async def login_user(
     return logined_user
 
 
-@router.put("", response_model=entities.User)
+@router.put("/", response_model=entities.User)
 async def update_user(
     *,
     id: int,
@@ -57,7 +52,7 @@ async def update_user(
     return updated_user
 
 
-@router.delete("", response_model=entities.User)
+@router.delete("/", response_model=entities.User)
 async def delete_user(
     *, id: int, uu: usecases.UserUsecase = Depends(get_user_usecase)
 ) -> entities.User:
@@ -70,3 +65,20 @@ async def delete_user(
 @router.get("/", response_model=str)
 async def test_user() -> str:
     return "aaa"
+
+
+# ユーザー情報取得(id指定)
+@router.get("/test/{id}")
+def get_user(user_id: int) -> TestUser:
+    user = Session.query(TestUserTable).filter(TestUserTable.id == user_id).first()
+    return user
+
+
+# ユーザー情報登録
+@router.post("/test", response_model=TestUser)
+def post_user(user: TestUserCreate) -> TestUserCreate:
+    db_test_user = TestUserCreate(name=user.name, email=user.email)
+    Session.add(db_test_user)
+    Session.commit()
+    Session.refresh(db_test_user)
+    return db_test_user

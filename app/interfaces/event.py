@@ -6,8 +6,8 @@ from sqlalchemy.orm import Session
 import app.domains.entities as entities
 
 # from app.domains.entities import user
-# import app.drivers.models as models
-import app.drivers.models.event as models
+# import app.drivers.rdb.models as models
+import app.drivers.rdb.models.event as models
 from fastapi import HTTPException
 from datetime import datetime
 

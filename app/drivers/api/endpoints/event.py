@@ -1,19 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from typing import Optional
 
 import app.domains.entities as entities
 import app.usecases as usecases
 import app.interfaces as interfaces
-from app.drivers.models.base import SessionLocal
-
-# models.Base.metadata.create_all(bind=engine)
+from app.drivers.rdb.base import Session
 
 router = APIRouter()
 
 
 def get_db() -> Session:
-    db = SessionLocal()
+    db = Session()
     try:
         yield db
     finally:

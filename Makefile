@@ -20,4 +20,4 @@ black:
 
 # テスト実行
 test:
-	docker-compose -f docker-compose.yml run --rm fastapi coverage run -m pytest -v -s /backend/app/
+	docker-compose -f docker-compose.yml run --rm fastapi coverage run -m pytest -v -s /app/
