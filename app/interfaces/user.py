@@ -2,11 +2,11 @@ from typing import Any, Dict, Optional, Union
 
 import app.domains.entities as entities
 import app.drivers.rdb.models.user as models
-
-# import hashlib
+import hashlib
+from datetime import datetime
 from fastapi import HTTPException
 from datetime import datetime
-from app.drivers.rdb.base import Session
+from sqlalchemy.orm import Session
 
 # from pydantic import constr
 
@@ -19,11 +19,12 @@ import app.usecases as usecases
 # ここで記述処理は，型の変換と最小限のエラー処理．メインロジックはusecaseが担当するのであまり余計な事は書かない．
 class SQLUserRepository(usecases.IUserRepository):
     def __init__(self, db: Session) -> None:
-        self.db = db
+        self.db: Session = db
+        self.model = models.User
 
     def _get_by_id(self, id: int) -> Optional[models.User]:
         get_user_model = (
-            self.db.query(models.User).filter(models.User.user_id == id).first()
+            self.db.query(self.model).filter(self.model.user_id == id).first()
         )
         if not get_user_model:
             return None
@@ -38,37 +39,28 @@ class SQLUserRepository(usecases.IUserRepository):
 
     def _get_by_email(self, email: str) -> Optional[models.User]:
         get_user_model = (
-            self.db.query(models.User).filter(models.User.email == email).first()
+            self.db.query(self.model).filter(self.model.email == email).first()
         )
         if not get_user_model:
             return None
         return get_user_model
 
-    # def create(self, obj_in: entities.UserCreate) -> entities.User:
-    #     db_user = models.User(
-    #         user_name=obj_in.user_name,
-    #         email=obj_in.email,
-    #         birthday=obj_in.birthday,
-    #         # password_hash=hashlib.sha256(obj_in.password.encode()).hexdigest(),
-    #     )
-    #     self.db.add(db_user)
-    #     self.db.commit()
-    #     self.db.refresh(db_user)
-    #     db_user_entities = entities.User.from_orm(db_user)
-    #     return db_user_entities
-
     def create(self, obj_in: entities.UserCreate) -> entities.User:
-        db_user = models.User(
+        db_user = self.model(
             user_name=obj_in.user_name,
             email=obj_in.email,
-            birthday=obj_in.birthday,
-            # password_hash=hashlib.sha256(obj_in.password.encode()).hexdigest(),
+            password_hash=hashlib.sha256(obj_in.password.encode()).hexdigest(),
+            registered_at= datetime.now()
         )
-        Session.add(db_user)
-        Session.commit()
-        Session.refresh(db_user)
-        db_user_entities = entities.User.from_orm(db_user)
-        return db_user_entities
+        get_user_by_email = self._get_by_email(db_user.email)
+        if get_user_by_email:
+            raise HTTPException(status_code=400, detail="このメールアドレスはすでに使われています")
+        self.db.add(db_user)
+        self.db.commit()
+        self.db.refresh(db_user)
+        created_user = self._get_by_email(db_user.email)
+        read_user = entities.User.from_orm(created_user)
+        return read_user
 
     def update(
         self, id: int, obj_in: Union[entities.UserUpdate, Dict[str, Any]]
@@ -88,12 +80,12 @@ class SQLUserRepository(usecases.IUserRepository):
         return get_user_model_entities
 
     def delete(self, id: int) -> Optional[entities.User]:
-        delete_user_model = models.User.delete().where(models.User.user_id == id)
-        if not delete_user_model:
-            raise HTTPException(status_code=404, detail="指定されたユーザーは存在しないか，既に削除されています")
-        delete_user_entities = entities.User.from_orm(delete_user_model)
-        self.db.delete_user_model()
-        return delete_user_entities
+        deleted_user: models.User = self.db.query(models.User).get(id)
+        if not deleted_user:
+            raise HTTPException(status_code=404, detail="指定されたユーザーは存在しません")
+        self.db.delete(deleted_user)
+        self.db.commit()
+        return entities.User.from_orm(deleted_user)
 
     def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
         pass
