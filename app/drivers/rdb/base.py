@@ -27,4 +27,4 @@ SessionLocal = scoped_session(
 )
 
 Base = declarative_base()
-Base.metadata.create_all(ENGINE)
+# Base.metadata.create_all(ENGINE)

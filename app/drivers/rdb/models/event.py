@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text
 
-from app.drivers.rdb.base import Base
+from app.drivers.rdb.base import Base, ENGINE
+
+Base.metadata.create_all(bind=ENGINE, checkfirst=False)
 
 
 class Event(Base):
