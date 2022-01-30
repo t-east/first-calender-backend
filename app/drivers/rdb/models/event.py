@@ -21,3 +21,5 @@ class Event(Base):
     deleted_at = Column(DateTime, nullable=True)
 
     color = Column(String(32), nullable=False, index=True)
+
+    tag_id = Column(Integer, nullable=True, index=True)
