@@ -16,16 +16,16 @@ async def create_event(
     return eu.create(obj_in=event_in)
 
 
-@router.put("/{user_id}", response_model=entities.Event)
+@router.put("/{user_id}/{event_id}", response_model=entities.Event)
 async def update_event(
     *,
-    id: int,
+    event_id: int,
     user_id: int,
     event_in: entities.EventUpdate,
     eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> Optional[entities.Event]:
     updated_event: Optional[entities.Event] = eu.update(
-        id=id, user_id=user_id, obj_in=event_in
+        event_id=event_id, user_id=user_id, obj_in=event_in
     )
     if updated_event is None:
         raise HTTPException(status_code=404)

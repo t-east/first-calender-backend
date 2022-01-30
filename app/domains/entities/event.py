@@ -9,7 +9,6 @@ class EventBase(BaseModel):
     to_date: datetime.date
     from_date: datetime.date
     is_all_day: Optional[bool]
-    # tag: List[Tag]
 
 
 class EventCreate(EventBase):
@@ -23,6 +22,7 @@ class EventUpdate(EventBase):
 class EventInDBBase(EventBase):
     event_id: int
     user_id: int
+    # tag list:
 
     class Config:
         orm_mode = True
