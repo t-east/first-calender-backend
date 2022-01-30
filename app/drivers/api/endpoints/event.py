@@ -41,7 +41,7 @@ async def get_event(
         raise HTTPException(status_code=404)
     return selected_event
 
-
+# todo: 不要
 @router.get("/", response_model=entities.ListEventsResponse)
 async def get_events(
     *, eu: usecases.EventUsecase = Depends(get_event_usecase)
@@ -60,5 +60,5 @@ async def delete_event(
         event_id=event_id, user_id=user_id
     )
     if deleted_event is None:
-        raise HTTPException(status_code=404, detail="testerror")
+        raise HTTPException(status_code=404, detail="イベント削除エラー")
     return deleted_event
