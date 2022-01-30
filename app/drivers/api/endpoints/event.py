@@ -41,6 +41,7 @@ async def get_event(
         raise HTTPException(status_code=404)
     return selected_event
 
+
 # todo: 不要
 @router.get("/", response_model=entities.ListEventsResponse)
 async def get_events(
