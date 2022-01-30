@@ -18,7 +18,7 @@
 |  id  |  int  | false | 識別子 | 
 |  user_id  |  int  | false | ユーザ識別子 | 
 |  title  |  string  | false | イベントタイトル | 
-|  description  |  string  | true | イベント詳細 |
+|  description_text  |  string  | true | イベント詳細 |
 |  from_date  |  string  | true | イベント開始時刻 |
 |  is_all_day  |  boolen  | true | 終日判別子 |
 |  to_date  |  string  | false | イベント開始時刻 |

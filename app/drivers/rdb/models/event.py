@@ -13,7 +13,7 @@ class Event(Base):
     #     user_id = Column(Integer, ForeignKey("users.user_id", ondelete="SET NULL"))
     title = Column(String(128), unique=False, index=True, nullable=False)
 
-    description = Column(Text(1000), nullable=True)
+    description_text = Column(Text(1000), nullable=True)
 
     from_date = Column(DateTime, nullable=False, index=True)
     is_all_day = Column(Boolean, nullable=True)

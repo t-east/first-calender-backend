@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 class EventBase(BaseModel):
     title: Optional[str] = Field(max_length=12)
-    description: Optional[str] = None
+    description_text: Optional[str] = None
     to_date: datetime.date
     from_date: datetime.date
     is_all_day: Optional[bool]
