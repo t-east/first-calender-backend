@@ -26,9 +26,9 @@ class Event(BaseModel):
     event_id: int
     event_name: str = Field(max_length=12)
     description: TEXT
-    begin_date: datetime.date
+    from_date: datetime.date
     is_all_day: Boolean
-    end_date: datetime.date
+    to_date: datetime.date
     created_at: datetime.datetime
     updated_at: datetime.datetime
     deleted_at: datetime.datetime

@@ -42,10 +42,9 @@ class SQLEventRepository(usecases.IEventRepository):
         db_event = models.Event(
             event_title=obj_in.title,
             description=obj_in.description,
-            begin_date=obj_in.begin_date,
+            from_date=obj_in.from_date,
             is_all_day=obj_in.is_all_day,
-            end_date=obj_in.end_date,
-            color=obj_in.color,
+            to_date=obj_in.to_date,
         )
         self.db.add(db_event)
         self.db.commit()

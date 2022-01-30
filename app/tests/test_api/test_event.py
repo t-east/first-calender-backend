@@ -8,16 +8,16 @@ from app.tests.utils import StatusCode
 
 def post_event(
     client: TestClient,
-    begin_date_: str,
-    end_date_: str,
+    from_date_: str,
+    to_date_: str,
     user_id: int,
     title: str = "タイトル",
     description: str = "内容",
     is_all_day: bool = False,
 ) -> requests.Response:
     data: Dict[str, Any] = {
-        "begin_date_": begin_date_,
-        "end_date_": end_date_,
+        "from_date_": from_date_,
+        "to_date_": to_date_,
         "user_id": user_id,
         "title": title,
         "description": description,
@@ -30,10 +30,9 @@ def test_post_event(client: TestClient) -> None:
     data: Dict[str, Any] = {
         "title": "タイトル",
         "description": "内容",
-        "begin_date_": "2021-10-20T13:00:00",
+        "from_date_": "2021-10-20T13:00:00",
         "is_all_day": True,
-        "end_date_": "2021-10-10T13:00:00",
-        "user_id": 1,
+        "to_date_": "2021-10-10T13:00:00",
     }
     r: requests.Response = client.post("/api/event/", data=data)
     assert r.status_code == StatusCode.OK
@@ -43,10 +42,9 @@ def test_post_event_error_not_exist(client: TestClient) -> None:
     data: Dict[str, Any] = {
         "title": "タイトル",
         "description": "内容",
-        "begin_date_": "2021-10-20T13:00:00",
+        "from_date_": "2021-10-20T13:00:00",
         "is_all_day": True,
-        "end_date_": "2021-10-10T13:00:00",
-        "user_id": 3,
+        "to_date_": "2021-10-10T13:00:00",
     }
     r: requests.Response = client.post("/api/event/", data=data)
     assert r.status_code == StatusCode.Unauthorized
@@ -56,9 +54,9 @@ def test_post_event_invalid_date(client: TestClient) -> None:
     data: Dict[str, Any] = {
         "title": "タイトル",
         "description": "内容",
-        "begin_date_": "2021-10-20T13:00:00",
+        "from_date_": "2021-10-20T13:00:00",
         "is_all_day": True,
-        "end_date_": "2021-10-10T13:00:00",
+        "to_date_": "2021-10-10T13:00:00",
         "user_id": 3,
     }
     r: requests.Response = client.post("/api/event/", data=data)

@@ -1,15 +1,16 @@
 from typing import Optional, List
 import datetime
+import app.domains.entities as entities
 from pydantic import BaseModel, Field
 
 
 class EventBase(BaseModel):
     title: Optional[str] = Field(max_length=12)
     description: Optional[str] = None
-    begin_date: Optional[datetime.date]
+    to_date: Optional[datetime.date]
+    from_date: Optional[datetime.date]
     is_all_day: Optional[bool]
-    end_date: Optional[datetime.date]
-    color: Optional[str]
+    # tag: List[Tag]
 
 
 class EventCreate(EventBase):

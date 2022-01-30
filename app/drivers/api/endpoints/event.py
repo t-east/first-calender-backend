@@ -16,7 +16,7 @@ async def create_event(
     return eu.create(obj_in=event_in)
 
 
-@router.put("/", response_model=entities.Event)
+@router.put("/{user_id}", response_model=entities.Event)
 async def update_event(
     *,
     id: int,
@@ -32,7 +32,7 @@ async def update_event(
     return updated_event
 
 
-@router.get("/{event_id}", response_model=entities.Event)
+@router.get("/{user_id}/{event_id}", response_model=entities.Event)
 async def get_event(
     *,
     event_id: int,
