@@ -1,8 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime
 
-from app.drivers.rdb.base import Base, ENGINE
-
-Base.metadata.create_all(bind=ENGINE, checkfirst=False)
+from app.drivers.rdb.base import Base
 
 class User(Base):
     __tablename__ = "users"
