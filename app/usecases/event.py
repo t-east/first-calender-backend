@@ -6,10 +6,6 @@ import app.domains.entities as entities
 
 class IEventRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def read(self, id: int, user_id: int) -> Optional[entities.Event]:
-        raise NotImplementedError
-
-    @abc.abstractmethod
     def create(self, obj_in: entities.EventCreate) -> entities.Event:
         raise NotImplementedError
 
@@ -20,11 +16,15 @@ class IEventRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def delete(self, id: int, user_id: int) -> Optional[entities.Event]:
+    def delete(self, event_id: int, user_id: int) -> Optional[entities.Event]:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_list(self, user_id: int) -> entities.ListEventsResponse:
+    def get_list(self) -> entities.ListEventsResponse:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_list_by_id(self, user_id: int) -> entities.ListEventsResponse:
         raise NotImplementedError
 
 
@@ -34,9 +34,6 @@ class EventUsecase:
     def __init__(self, repo: IEventRepository) -> None:
         self.repo = repo
 
-    def read(self, id: int, user_id: int) -> Optional[entities.Event]:
-        return self.repo.read(id=id, user_id=user_id)
-
     def create(self, obj_in: entities.EventCreate) -> entities.Event:
         return self.repo.create(obj_in=obj_in)
 
@@ -45,8 +42,11 @@ class EventUsecase:
     ) -> Optional[entities.Event]:
         return self.repo.update(id=id, user_id=user_id, obj_in=obj_in)
 
-    def delete(self, id: int, user_id: int) -> Optional[entities.Event]:
-        return self.repo.delete(id=id, user_id=user_id)
+    def delete(self, event_id: int, user_id: int) -> Optional[entities.Event]:
+        return self.repo.delete(event_id=event_id, user_id=user_id)
 
-    def get_list(self, user_id: int) -> entities.ListEventsResponse:
-        return self.repo.get_list(user_id=user_id)
+    def get_list(self) -> entities.ListEventsResponse:
+        return self.repo.get_list()
+
+    def get_list_by_id(self, user_id: int) -> entities.ListEventsResponse:
+        return self.repo.get_list_by_id(user_id=user_id)

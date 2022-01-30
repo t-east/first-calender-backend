@@ -12,13 +12,20 @@
     password: test_pass
     user_name: test_user2
 
-# - model: event
-#   fields:
-#     id: 1
-#     user_id: 1
-#     title: イベント１
-#     description: イベント１の詳細
-#     from_date: "2022-01-27T00:00:00"
-#     is_all_day: false
-#     to_date: "2022-01-30T00:00:00"
-#     color: "#000000"
+- model: event
+  fields:
+    user_id: 1
+    title: イベント１
+    description: イベント１の詳細
+    from_date: "2022-01-27"
+    is_all_day: false
+    to_date: "2022-01-30"
+
+- model: event
+  fields:
+    user_id: 1
+    title: イベント2
+    description: イベント2の詳細
+    from_date: "2022-01-28"
+    is_all_day: false
+    to_date: "2022-01-28"
