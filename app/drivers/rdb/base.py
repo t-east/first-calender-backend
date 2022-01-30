@@ -5,7 +5,7 @@ from pydantic import BaseSettings
 
 
 class DBSettings(BaseSettings):
-    host: str = "mysql"
+    host: str = "mysql:3306"
     db_name = "calendar"
     user = "root"
     password = "password"
@@ -27,3 +27,4 @@ SessionLocal = scoped_session(
 )
 
 Base = declarative_base()
+Base.metadata.create_all(ENGINE)
