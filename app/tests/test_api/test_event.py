@@ -104,6 +104,21 @@ def test_get_event_error(client: TestClient, db: scoped_session) -> None:
     assert r.status_code == StatusCode.BadRequest
 
 
+def test_update_event(client: TestClient, db: scoped_session) -> None:
+    event_id = 1
+    user_id = 1
+    data: Dict[str, Any] = {
+        "title": "ああああああああ",
+        "description": "いいいい",
+        "from_date": "2012-09-16",
+        "is_all_day": True,
+        "to_date": "2020-09-29",
+    }
+    r: requests.Response = client.put(f"/api/event/{user_id}/{event_id}", json=data)
+    print(r.json)
+    assert r.status_code == StatusCode.OK
+
+
 def test_delete_event(client: TestClient, db: scoped_session) -> None:
     event_id = 1
     user_id = 1

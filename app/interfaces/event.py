@@ -76,12 +76,14 @@ class SQLEventRepository(usecases.IEventRepository):
         get_event_model = self._find_event(event_id)
         if not get_event_model:
             raise HTTPException(status_code=404, detail="指定されたユーザーは存在しません")
-
-        for var, value in vars(obj_in).items():
-            setattr(get_event_model, var, value) if value else None
-
+        
+        get_event_model.title=obj_in.title
+        get_event_model.description=obj_in.description
+        get_event_model.from_date=obj_in.from_date
+        get_event_model.to_date=obj_in.to_date
+        get_event_model.is_all_day=obj_in.is_all_day
         get_event_model.updated_at = datetime.datetime.now()
-        self.db.add(get_event_model)
+
         self.db.commit()
         self.db.refresh(get_event_model)
         get_event_model_entities = entities.Event.from_orm(get_event_model)
