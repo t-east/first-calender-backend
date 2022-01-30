@@ -33,9 +33,9 @@ def create_event(db: Session, event: schemas.Event) -> models.Event:
     db_event = models.Event(
         event_name=event.event_name,
         event_description=event.description,
-        event_begin_date=event.begin_date,
+        event_from_date=event.from_date,
         event_is_allday=event.is_all_day,
-        event_end_date=event.end_date,
+        event_to_date=event.to_date,
         event_created_at=event.created_at,
         event_updated_at=event.updated_at,
         event_deleted_at=event.deleted_at,

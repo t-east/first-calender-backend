@@ -16,7 +16,7 @@ async def create_event(
     return eu.create(obj_in=event_in)
 
 
-@router.put("/", response_model=entities.Event)
+@router.put("/{user_id}", response_model=entities.Event)
 async def update_event(
     *,
     id: int,
@@ -32,31 +32,34 @@ async def update_event(
     return updated_event
 
 
-@router.get("/{event_id}", response_model=entities.Event)
+@router.get("/{user_id}", response_model=entities.ListEventsResponse)
 async def get_event(
-    *,
-    event_id: int,
-    user_id: int,
-    eu: usecases.EventUsecase = Depends(get_event_usecase)
-) -> Optional[entities.Event]:
-    selected_event: Optional[entities.Event] = eu.read(id=event_id, user_id=user_id)
+    *, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
+) -> entities.ListEventsResponse:
+    selected_event: entities.ListEventsResponse = eu.get_list_by_id(user_id=user_id)
     if selected_event is None:
         raise HTTPException(status_code=404)
     return selected_event
 
 
+# todo: 不要
 @router.get("/", response_model=entities.ListEventsResponse)
 async def get_events(
-    *, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
+    *, eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> entities.ListEventsResponse:
-    return eu.get_list(user_id=user_id)
+    return eu.get_list()
 
 
-@router.delete("/", response_model=entities.Event)
+@router.delete("/{user_id}/{event_id}", response_model=entities.Event)
 async def delete_event(
-    *, id: int, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
+    *,
+    event_id: int,
+    user_id: int,
+    eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> Optional[entities.Event]:
-    deleted_event: Optional[entities.Event] = eu.delete(id=id, user_id=user_id)
+    deleted_event: Optional[entities.Event] = eu.delete(
+        event_id=event_id, user_id=user_id
+    )
     if deleted_event is None:
-        raise HTTPException(status_code=404)
+        raise HTTPException(status_code=404, detail="イベント削除エラー")
     return deleted_event

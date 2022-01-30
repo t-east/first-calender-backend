@@ -6,10 +6,10 @@ from pydantic import BaseModel, Field
 class EventBase(BaseModel):
     title: Optional[str] = Field(max_length=12)
     description: Optional[str] = None
-    begin_date: Optional[datetime.date]
+    to_date: datetime.date
+    from_date: datetime.date
     is_all_day: Optional[bool]
-    end_date: Optional[datetime.date]
-    color: Optional[str]
+    # tag: List[Tag]
 
 
 class EventCreate(EventBase):
@@ -21,7 +21,7 @@ class EventUpdate(EventBase):
 
 
 class EventInDBBase(EventBase):
-    id: int
+    event_id: int
     user_id: int
 
     class Config:
@@ -36,3 +36,6 @@ class Event(EventInDBBase):
 class ListEventsResponse(BaseModel):
     total: int
     events: List[Event]
+
+    class Config:
+        orm_mode = True
