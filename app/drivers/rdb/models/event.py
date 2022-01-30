@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text
 
 from app.drivers.rdb.base import Base
 
+
 class Event(Base):
     __tablename__ = "events"
 
