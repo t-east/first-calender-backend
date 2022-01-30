@@ -62,7 +62,8 @@ async def get_event(
 
 @router.get("/", response_model=entities.ListEventsResponse)
 async def get_events(
-    *, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
+    *,
+    user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> entities.ListEventsResponse:
     return eu.get_list(user_id=user_id)
 
@@ -78,13 +79,17 @@ async def delete_event(
 
 
 @router.get("/{event_id}/tag/{tag_id}", response_model=entities.ListEventsResponse)
-async def get_events(
-    *, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
+async def get_event_tags(
+    *,
+    user_id: int,
+    event_id: int,
+    tag_id: int,
+    eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> entities.ListEventsResponse:
-    return eu.get_list(user_id=user_id)
+    return eu.get_event_tag(user_id=user_id)
 
 
-@router.post("/{event_id}/tag/", response_model=entities.ListEventsResponse)
+@router.post("/{event_id}/tag", response_model=entities.ListEventsResponse)
 async def get_events(
     *, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> entities.ListEventsResponse:

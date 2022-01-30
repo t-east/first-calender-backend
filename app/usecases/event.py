@@ -27,6 +27,10 @@ class IEventRepository(metaclass=abc.ABCMeta):
     def get_list(self, user_id: int) -> entities.ListEventsResponse:
         raise NotImplementedError
 
+    @abc.abstractclassmethod
+    def get_tag(self, ):
+        raise NotImplementedError
+
 
 class EventUsecase:
     repo: IEventRepository
@@ -50,3 +54,8 @@ class EventUsecase:
 
     def get_list(self, user_id: int) -> entities.ListEventsResponse:
         return self.repo.get_list(user_id=user_id)
+
+    def get_tag(self, user_id: int, id: int, tag_id: int) -> entities:
+        return self.repo.get_tag(user_id=user_id, id=id, tag_id=tag_id)
+
+    # def create_tag(self, user_id: int, id: int, obj_in: Union[entities.])

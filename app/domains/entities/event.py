@@ -3,6 +3,8 @@ from typing import Optional, List
 import datetime
 from pydantic import BaseModel, Field
 
+from app.drivers.rdb.base import Base
+
 
 class EventBase(BaseModel):
     title: Optional[str] = Field(max_length=12)
@@ -38,3 +40,5 @@ class Event(EventInDBBase):
 class ListEventsResponse(BaseModel):
     total: int
     events: List[Event]
+
+# class ListEventTags(BaseModel):
