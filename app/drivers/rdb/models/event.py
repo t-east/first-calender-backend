@@ -7,7 +7,7 @@ class Event(Base):
     __tablename__ = "events"
 
     event_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    user_id = Column(Integer, nullable=True)
+    user_id = Column(Integer, nullable=False)
     #     user_id = Column(Integer, ForeignKey("users.user_id", ondelete="SET NULL"))
     title = Column(String(128), unique=False, index=True, nullable=True)
 
@@ -17,6 +17,6 @@ class Event(Base):
     is_all_day = Column(Boolean, nullable=True)
     to_date = Column(DateTime, nullable=False)
 
-    created_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=True)
     deleted_at = Column(DateTime, nullable=True)
