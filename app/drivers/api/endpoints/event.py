@@ -46,7 +46,9 @@ async def get_list_events(
 async def get_by_id(
     event_id: int, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> Optional[entities.Event]:
-    get_event: Optional[entities.Event] = eu.get_by_id(event_id=event_id, user_id=user_id)
+    get_event: Optional[entities.Event] = eu.get_by_id(
+        event_id=event_id, user_id=user_id
+    )
     if get_event is None:
         raise HTTPException(status_code=404)
     return get_event

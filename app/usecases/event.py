@@ -11,7 +11,10 @@ class IEventRepository(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def update(
-        self, event_id: int, user_id: int, obj_in: Union[entities.EventUpdate, Dict[str, Any]]
+        self,
+        event_id: int,
+        user_id: int,
+        obj_in: Union[entities.EventUpdate, Dict[str, Any]],
     ) -> Optional[entities.Event]:
         raise NotImplementedError
 
