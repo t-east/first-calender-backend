@@ -11,7 +11,7 @@ class IEventRepository(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def update(
-        self, id: int, user_id: int, obj_in: Union[entities.EventUpdate, Dict[str, Any]]
+        self, event_id: int, user_id: int, obj_in: Union[entities.EventUpdate, Dict[str, Any]]
     ) -> Optional[entities.Event]:
         raise NotImplementedError
 
@@ -28,7 +28,7 @@ class IEventRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.User]:
+    def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.Event]:
         raise NotImplementedError
 
 
@@ -58,5 +58,5 @@ class EventUsecase:
     def get_list_by_id(self, user_id: int) -> entities.ListEventsResponse:
         return self.repo.get_list_by_id(user_id=user_id)
 
-    def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.User]:
+    def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.Event]:
         return self.repo.get_by_id(event_id=event_id, user_id=user_id)
