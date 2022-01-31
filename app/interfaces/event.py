@@ -19,7 +19,7 @@ class SQLEventRepository(usecases.IEventRepository):
         self.model = models.Event
         self.user_model = user_models.User
 
-    def _validate_date(self, from_date: datetime.date, to_date: datetime.date) -> bool:
+    def _validate_date(self, from_date: datetime.datetime, to_date: datetime.datetime) -> bool:
         return to_date < from_date
 
     def _find_user(self, user_id: int) -> bool:
