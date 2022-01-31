@@ -1,8 +1,9 @@
 import os
+import sys
 from typing import Any, Dict, List
 
 import yaml
-
+sys.path.append('../app')
 from app.drivers.rdb.init_db import init_db
 from app.drivers.rdb.base import SessionLocal
 
