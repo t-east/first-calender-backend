@@ -19,13 +19,13 @@ async def create_event(
 @router.put("/{user_id}", response_model=entities.Event)
 async def update_event(
     *,
-    id: int,
+    event_id: int,
     user_id: int,
     event_in: entities.EventUpdate,
     eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> Optional[entities.Event]:
     updated_event: Optional[entities.Event] = eu.update(
-        id=id, user_id=user_id, obj_in=event_in
+        evevnt_id=event_id, user_id=user_id, obj_in=event_in
     )
     if updated_event is None:
         raise HTTPException(status_code=404)
@@ -40,6 +40,17 @@ async def get_event(
     if selected_event is None:
         raise HTTPException(status_code=404)
     return selected_event
+
+@router.get("/{user_id}/{event_id}", response_model=entities.Event)
+async def get_event(
+    event_id: int,
+    user_id: int,
+    eu: usecases.EventUsecase = Depends(get_event_usecase)
+) -> Optional[entities.Event]:
+    get_event: entities.Event = eu.get_by_id(event_id=event_id, user_id=user_id)
+    if get_event is None:
+        raise HTTPException(status_code=404)
+    return get_event
 
 
 # todo: 不要
