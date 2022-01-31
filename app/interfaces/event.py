@@ -117,12 +117,12 @@ class SQLEventRepository(usecases.IEventRepository):
         total: int = query.count()
         return entities.ListEventsResponse(total=total, events=events)
 
-    def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.User]:
-        if self._find_user(user_id):
+    def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.Event]:
+        if not self._find_user(user_id=user_id):
             raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
-        get_event_model = self._find_event(event_id)
+        get_event_model = self._find_event(event_id=event_id)
         if not get_event_model:
-            raise HTTPException(status_code=404, detail="指定されたユーザーは存在しません")
+            raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
         query = self.db.query(self.model).filter(self.model.user_id == user_id, self.model.event_id == event_id).first()
         event =  entities.Event.from_orm(query)
         return event
