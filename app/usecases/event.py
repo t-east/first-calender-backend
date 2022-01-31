@@ -42,7 +42,10 @@ class EventUsecase:
         return self.repo.create(obj_in=obj_in)
 
     def update(
-        self, event_id: int, user_id: int, obj_in: Union[entities.EventUpdate, Dict[str, Any]]
+        self,
+        event_id: int,
+        user_id: int,
+        obj_in: Union[entities.EventUpdate, Dict[str, Any]],
     ) -> Optional[entities.Event]:
         return self.repo.update(event_id=event_id, user_id=user_id, obj_in=obj_in)
 

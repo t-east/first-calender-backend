@@ -41,11 +41,10 @@ async def get_event(
         raise HTTPException(status_code=404)
     return selected_event
 
+
 @router.get("/{user_id}/{event_id}", response_model=entities.Event)
 async def get_event(
-    event_id: int,
-    user_id: int,
-    eu: usecases.EventUsecase = Depends(get_event_usecase)
+    event_id: int, user_id: int, eu: usecases.EventUsecase = Depends(get_event_usecase)
 ) -> Optional[entities.Event]:
     get_event: entities.Event = eu.get_by_id(event_id=event_id, user_id=user_id)
     if get_event is None:
