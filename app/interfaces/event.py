@@ -50,7 +50,7 @@ class SQLEventRepository(usecases.IEventRepository):
         db_event = models.Event(
             title=obj_in.title,
             user_id=obj_in.user_id,
-            description=obj_in.description,
+            description_text=obj_in.description_text,
             from_date=obj_in.from_date,
             is_all_day=obj_in.is_all_day,
             to_date=obj_in.to_date,

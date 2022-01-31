@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from app.drivers.api.urls import api_router
+from app.drivers.rdb.base import Base, ENGINE
 
 app = FastAPI()
 
@@ -15,3 +16,4 @@ app.add_middleware(
 )
 
 app.include_router(api_router)
+Base.metadata.create_all(ENGINE)

@@ -10,6 +10,14 @@ make build
 make dev
 ```
 
+### サーバー再起動, MySQLリセット
+```
+# コンテナ落とす, SQLのデータ削除
+make del
+# コンテナ&サーバ再起動
+make dev
+```
+
 ## デプロイ
 TBA
 ## APIドキュメント

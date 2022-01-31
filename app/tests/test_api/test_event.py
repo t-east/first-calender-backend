@@ -13,7 +13,7 @@ def post_event(
     to_date: str,
     user_id: int,
     title: str = "タイトル",
-    description: str = "内容",
+    description_text: str = "内容",
     is_all_day: bool = False,
 ) -> requests.Response:
     data: Dict[str, Any] = {
@@ -21,7 +21,7 @@ def post_event(
         "to_date": to_date,
         "user_id": user_id,
         "title": title,
-        "description": description,
+        "description_text": description_text,
         "is_all_day": is_all_day,
     }
     return client.post("/api/event/", data=data)
@@ -31,7 +31,7 @@ def test_post_event(client: TestClient, db: scoped_session) -> None:
     data: Dict[str, Any] = {
         "user_id": 1,
         "title": "タイトル",
-        "description": "内容",
+        "description_text": "内容",
         "from_date": "1993-09-11",
         "is_all_day": False,
         "to_date": "1999-09-11",
@@ -43,7 +43,7 @@ def test_post_event(client: TestClient, db: scoped_session) -> None:
 # def test_post_event_error_not_exist(client: TestClient) -> None:
 #     data: Dict[str, Any] = {
 #         "title": "タイトル",
-#         "description": "内容",
+#         "description_text": "内容",
 #         "from_date": "2021-10-20T13:00:00",
 #         "is_all_day": True,
 #         "to_date": "2021-10-10T13:00:00",
@@ -56,7 +56,7 @@ def test_post_event_invalid_date(client: TestClient, db: scoped_session) -> None
     data: Dict[str, Any] = {
         "user_id": 1,
         "title": "タイトル",
-        "description": "内容",
+        "description_text": "内容",
         "from_date": "2012-09-11",
         "is_all_day": False,
         "to_date": "2000-09-11",

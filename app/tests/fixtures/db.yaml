@@ -16,7 +16,7 @@
   fields:
     user_id: 1
     title: イベント１
-    description: イベント１の詳細
+    description_text: イベント１の詳細
     from_date: "2022-01-27"
     is_all_day: false
     to_date: "2022-01-30"
@@ -25,7 +25,7 @@
   fields:
     user_id: 1
     title: イベント2
-    description: イベント2の詳細
+    description_text: イベント2の詳細
     from_date: "2022-01-28"
     is_all_day: false
     to_date: "2022-01-28"
