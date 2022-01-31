@@ -27,7 +27,7 @@ def db() -> Generator:
         TEST_SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
     )
     # Create test database and tables
-    Base.metadata.create_all(engine)
+    Base.metadata.create_all(bind=engine, checkfirst=True)
     db = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
     file_path: str = os.path.join(os.path.dirname(__file__), "fixtures", "db.yaml")
     load_fixtures(db, file_path)
