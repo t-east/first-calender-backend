@@ -71,11 +71,11 @@ class SQLEventRepository(usecases.IEventRepository):
         user_id: int,
         obj_in: Union[entities.EventUpdate, Dict[str, Any]],
     ) -> Optional[entities.Event]:
-        if self._find_user(user_id):
+        if not self._find_user(user_id):
             raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
         get_event_model = self._find_event(event_id)
         if not get_event_model:
-            raise HTTPException(status_code=404, detail="指定されたユーザーは存在しません")
+            raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
 
         for var, value in vars(obj_in).items():
             setattr(get_event_model, var, value) if value else None
