@@ -71,6 +71,8 @@ class SQLEventRepository(usecases.IEventRepository):
             from_date=obj_in.from_date,
             is_all_day=obj_in.is_all_day,
             to_date=obj_in.to_date,
+            url=obj_in.url,
+            created_at=datetime.datetime.now(),
         )
         if self._validate_date(db_event.from_date, db_event.to_date):
             raise HTTPException(status_code=400, detail="invalid date")
@@ -148,7 +150,7 @@ class SQLEventRepository(usecases.IEventRepository):
         return event
 
     def create_tag(self, obj_in: tag_entities.TagCreate) -> tag_entities.Tag:
-        db_tag = tag_models.Tag(**obj_in.dict())
+        db_tag = tag_models.Tag(**obj_in.dict(), created_at=datetime.datetime.now())
         self.db.add(db_tag)
         self.db.commit()
         self.db.refresh(db_tag)

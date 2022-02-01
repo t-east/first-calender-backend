@@ -10,6 +10,7 @@ class EventBase(BaseModel):
     to_date: datetime.date
     from_date: datetime.date
     is_all_day: Optional[bool] = False
+    url: Optional[str] = None
 
 
 class EventCreate(EventBase):
