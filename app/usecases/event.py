@@ -4,6 +4,7 @@ from typing import Any, Dict, Optional, Union
 import app.domains.entities as entities
 import app.domains.entities.tag as tag_entities
 
+
 class IEventRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def create(self, obj_in: entities.EventCreate) -> entities.Event:
@@ -37,11 +38,11 @@ class IEventRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def create_tag(self, obj_in: tag_entities.TagCreate) -> tag_entities.Tag:
         raise NotImplementedError
-    
+
     @abc.abstractmethod
     def get_tag_by_id(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
         raise NotImplementedError
-    
+
     @abc.abstractmethod
     def delete_tag(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
         raise NotImplementedError

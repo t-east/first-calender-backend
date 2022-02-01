@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, null
-from sqlalchemy.sql.functions import current_timestamp
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text
 from sqlalchemy.orm import relationship
 from app.drivers.rdb.base import Base
 
@@ -21,4 +20,4 @@ class Event(Base):
     updated_at = Column(DateTime, nullable=True)
     deleted_at = Column(DateTime, nullable=True)
 
-    tags = relationship('Tag', back_populates='event')
+    tags = relationship("Tag", back_populates="event")

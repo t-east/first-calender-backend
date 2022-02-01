@@ -46,7 +46,6 @@ class SQLEventRepository(usecases.IEventRepository):
         )
         return tag
 
-
     def _find_event(self, event_id: int) -> Optional[models.Event]:
         event = (
             self.db.query(self.model).filter(self.model.event_id == event_id).first()
@@ -162,12 +161,13 @@ class SQLEventRepository(usecases.IEventRepository):
             raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
         query = (
             self.db.query(self.tag_model)
-            .filter(self.tag_model.tag_id == tag_id, self.tag_model.event_id == event_id)
+            .filter(
+                self.tag_model.tag_id == tag_id, self.tag_model.event_id == event_id
+            )
             .first()
         )
         event = tag_entities.Tag.from_orm(query)
         return event
-
 
     def delete_tag(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
         if not self._find_event(event_id=event_id):
