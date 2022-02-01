@@ -1,15 +1,18 @@
 from typing import Any, Dict, Optional, Union, List
 
+
 # from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 import app.domains.entities as entities
 import app.drivers.rdb.models.event as models
 import app.drivers.rdb.models.user as user_models
+import app.drivers.rdb.models.tag as tag_models
 from fastapi import HTTPException
 import datetime
 
 import app.usecases as usecases
+import app.domains.entities.tag as tag_entities
 
 
 # ここで記述処理は，型の変換と最小限のエラー処理．メインロジックはusecaseが担当するのであまり余計な事は書かない．
@@ -18,6 +21,7 @@ class SQLEventRepository(usecases.IEventRepository):
         self.db: Session = db
         self.model = models.Event
         self.user_model = user_models.User
+        self.tag_model = tag_models.Tag
 
     def _validate_date(
         self, from_date: datetime.datetime, to_date: datetime.datetime
@@ -33,6 +37,17 @@ class SQLEventRepository(usecases.IEventRepository):
         if not user:
             return False
         return True
+
+    def _find_tag(self, tag_id: int) -> bool:
+        tag = (
+            self.db.query(self.tag_model)
+            .filter(self.tag_model.tag_id == tag_id)
+            .first()
+        )
+        if not tag:
+            return False
+        return True
+
 
     def _find_event(self, event_id: int) -> Optional[models.Event]:
         event = (
@@ -130,4 +145,25 @@ class SQLEventRepository(usecases.IEventRepository):
             .first()
         )
         event = entities.Event.from_orm(query)
+        return event
+
+    def create_tag(self, obj_in: tag_entities.TagCreate) -> tag_entities.Tag:
+        db_tag = tag_models.Tag(**obj_in.dict())
+        self.db.add(db_tag)
+        self.db.commit()
+        self.db.refresh(db_tag)
+        return db_tag
+
+    def get_tag_by_id(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
+        if not self._find_tag(tag_id=tag_id):
+            raise HTTPException(status_code=401, detail="指定されたタグは存在しません")
+        get_event_model = self._find_event(event_id=event_id)
+        if not get_event_model:
+            raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
+        query = (
+            self.db.query(self.tag_model)
+            .filter(self.tag_model.tag_id == tag_id, self.tag_model.event_id == event_id)
+            .first()
+        )
+        event = tag_entities.Tag.from_orm(query)
         return event
