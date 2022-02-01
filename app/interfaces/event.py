@@ -54,7 +54,6 @@ class SQLEventRepository(usecases.IEventRepository):
             from_date=obj_in.from_date,
             is_all_day=obj_in.is_all_day,
             to_date=obj_in.to_date,
-            created_at=datetime.datetime.now(),
         )
         if self._validate_date(obj_in.from_date, obj_in.to_date):
             raise HTTPException(status_code=400, detail="invalid date")
