@@ -1,13 +1,14 @@
 from typing import Optional, List
 import datetime
 from pydantic import BaseModel, Field
+from app.domains.entities.tag import Tag
 
 
 class EventBase(BaseModel):
     title: Optional[str] = Field(max_length=30)
     description_text: Optional[str] = None
-    to_date: datetime.date = datetime.datetime.now()
-    from_date: datetime.date = datetime.datetime.now() + datetime.timedelta(hours=1)
+    to_date: datetime.date
+    from_date: datetime.date
     is_all_day: Optional[bool] = False
 
 
@@ -22,6 +23,7 @@ class EventUpdate(EventBase):
 class EventInDBBase(EventBase):
     event_id: int
     user_id: int
+    tags: List[Tag] = []
 
     class Config:
         orm_mode = True
