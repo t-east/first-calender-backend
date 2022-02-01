@@ -4,12 +4,11 @@ from pydantic import BaseModel, Field
 
 
 class EventBase(BaseModel):
-    title: Optional[str] = Field(max_length=12)
+    title: Optional[str] = Field(max_length=30)
     description_text: Optional[str] = None
-    to_date: datetime.date
-    from_date: datetime.date
-    is_all_day: Optional[bool]
-    # tag: List[Tag]
+    to_date: datetime.date = datetime.datetime.now()
+    from_date: datetime.date = (datetime.datetime.now() + datetime.timedelta(hours=1))
+    is_all_day: Optional[bool] = False
 
 
 class EventCreate(EventBase):
