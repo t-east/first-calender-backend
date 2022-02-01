@@ -74,8 +74,6 @@ async def get_tag_by_id(
         raise HTTPException(status_code=404)
     return get_event
 
-@router.delete("/{event_id}/tag/{tag_id}", response_model=entities.Event)
-
 
 # todo: 不要
 @router.get("/", response_model=entities.ListEventsResponse)
@@ -98,3 +96,18 @@ async def delete_event(
     if deleted_event is None:
         raise HTTPException(status_code=404, detail="イベント削除エラー")
     return deleted_event
+
+
+@router.delete("/{event_id}/tag/{tag_id}", response_model=tag_entities.Tag)
+async def delete_tag(
+    *,
+    event_id: int,
+    tag_id: int,
+    eu: usecases.EventUsecase = Depends(get_event_usecase)
+) -> Optional[tag_entities.Tag]:
+    deleted_tag: Optional[tag_entities.Tag] = eu.delete_tag(
+        event_id=event_id, tag_id=tag_id
+    )
+    if deleted_tag is None:
+        raise HTTPException(status_code=404, detail="イベント削除エラー")
+    return deleted_tag

@@ -41,6 +41,10 @@ class IEventRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def get_tag_by_id(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
         raise NotImplementedError
+    
+    @abc.abstractmethod
+    def delete_tag(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
+        raise NotImplementedError
 
 
 class EventUsecase:
@@ -77,3 +81,6 @@ class EventUsecase:
 
     def get_tag_by_id(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
         return self.repo.get_tag_by_id(event_id=event_id, tag_id=tag_id)
+
+    def delete_tag(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
+        return self.repo.delete_tag(event_id=event_id, tag_id=tag_id)
