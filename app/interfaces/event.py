@@ -19,7 +19,9 @@ class SQLEventRepository(usecases.IEventRepository):
         self.model = models.Event
         self.user_model = user_models.User
 
-    def _validate_date(self, from_date: datetime.date, to_date: datetime.date) -> bool:
+    def _validate_date(
+        self, from_date: datetime.datetime, to_date: datetime.datetime
+    ) -> bool:
         return to_date < from_date
 
     def _find_user(self, user_id: int) -> bool:
@@ -70,11 +72,11 @@ class SQLEventRepository(usecases.IEventRepository):
         user_id: int,
         obj_in: Union[entities.EventUpdate, Dict[str, Any]],
     ) -> Optional[entities.Event]:
-        if self._find_user(user_id):
+        if not self._find_user(user_id):
             raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
         get_event_model = self._find_event(event_id)
         if not get_event_model:
-            raise HTTPException(status_code=404, detail="指定されたユーザーは存在しません")
+            raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
 
         for var, value in vars(obj_in).items():
             setattr(get_event_model, var, value) if value else None
@@ -115,3 +117,17 @@ class SQLEventRepository(usecases.IEventRepository):
         ]
         total: int = query.count()
         return entities.ListEventsResponse(total=total, events=events)
+
+    def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.Event]:
+        if not self._find_user(user_id=user_id):
+            raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
+        get_event_model = self._find_event(event_id=event_id)
+        if not get_event_model:
+            raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
+        query = (
+            self.db.query(self.model)
+            .filter(self.model.user_id == user_id, self.model.event_id == event_id)
+            .first()
+        )
+        event = entities.Event.from_orm(query)
+        return event

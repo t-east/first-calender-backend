@@ -29,3 +29,12 @@
     from_date: "2022-01-28"
     is_all_day: false
     to_date: "2022-01-28"
+
+- model: event
+  fields:
+    user_id: 1
+    title: 
+    description_text: 
+    from_date: "2022-01-27"
+    is_all_day: 
+    to_date: "2022-01-30"

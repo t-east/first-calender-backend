@@ -8,7 +8,7 @@ class Event(Base):
     __tablename__ = "events"
 
     event_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    user_id = Column(Integer)
+    user_id = Column(Integer, nullable=False)
     #     user_id = Column(Integer, ForeignKey("users.user_id", ondelete="SET NULL"))
     title = Column(String(30), unique=False, index=True, nullable=False)
 
