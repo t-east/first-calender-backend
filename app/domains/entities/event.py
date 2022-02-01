@@ -11,7 +11,6 @@ class EventBase(BaseModel):
     is_all_day: Optional[bool] = False
 
 
-
 class EventCreate(EventBase):
     user_id: Optional[int]
 
