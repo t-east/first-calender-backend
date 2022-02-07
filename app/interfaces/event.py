@@ -12,7 +12,6 @@ from fastapi import HTTPException
 import datetime
 
 import app.usecases as usecases
-import app.domains.entities as tag_entities
 
 
 # ここで記述処理は，型の変換と最小限のエラー処理．メインロジックはusecaseが担当するのであまり余計な事は書かない．
@@ -145,4 +144,3 @@ class SQLEventRepository(usecases.IEventRepository):
         )
         event = entities.Event.from_orm(query)
         return event
-
