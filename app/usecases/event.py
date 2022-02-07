@@ -18,7 +18,7 @@ class IEventRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def delete(self, event_id: int, user_id: int) -> Optional[entities.Event]:
+    def delete(self, event_id: int, user_id: int) -> None:
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -51,7 +51,7 @@ class EventUsecase:
     ) -> Optional[entities.Event]:
         return self.repo.update(event_id=event_id, user_id=user_id, obj_in=obj_in)
 
-    def delete(self, event_id: int, user_id: int) -> Optional[entities.Event]:
+    def delete(self, event_id: int, user_id: int) -> None:
         return self.repo.delete(event_id=event_id, user_id=user_id)
 
     def get_list(self) -> entities.ListEventsResponse:
