@@ -65,8 +65,6 @@ class SQLTagRepository(usecases.ITagRepository):
             raise HTTPException(status_code=400, detail="指定されたイベントは存在しません")
         query = self.db.query(self.model).filter(self.model.event_id == event_id)
         tags_in_db = query.all()
-        events: List[entities.Tag] = [
-            entities.Tag.from_orm(tag) for tag in tags_in_db
-        ]
+        events: List[entities.Tag] = [entities.Tag.from_orm(tag) for tag in tags_in_db]
         total: int = query.count()
         return entities.ListTagsResponse(total=total, events=events)

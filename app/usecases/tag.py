@@ -15,10 +15,11 @@ class ITagRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def delete(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
         raise NotImplementedError
-    
+
     @abc.abstractmethod
     def get_list_by_id(self, event_id: int) -> Optional[entities.ListTagsResponse]:
         raise NotImplementedError
+
 
 class TagUsecase:
     repo: ITagRepository

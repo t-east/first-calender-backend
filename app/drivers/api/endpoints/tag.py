@@ -29,12 +29,11 @@ async def get_by_id(
 async def delete(
     *, event_id: int, tag_id: int, tu: usecases.TagUsecase = Depends(get_tag_usecase)
 ) -> Optional[entities.Tag]:
-    deleted_tag: Optional[entities.Tag] = tu.delete(
-        event_id=event_id, tag_id=tag_id
-    )
+    deleted_tag: Optional[entities.Tag] = tu.delete(event_id=event_id, tag_id=tag_id)
     if deleted_tag is None:
         raise HTTPException(status_code=404, detail="イベント削除エラー")
     return deleted_tag
+
 
 @router.get("/{event_id}", response_model=entities.ListTagsResponse)
 async def get_list_tags(

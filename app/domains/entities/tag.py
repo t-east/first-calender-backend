@@ -23,6 +23,7 @@ class Tag(TagInDBBase):
     class Config:
         orm_mode = True
 
+
 class ListTagsResponse(BaseModel):
     total: int
     events: List[Tag]
