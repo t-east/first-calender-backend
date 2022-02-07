@@ -12,7 +12,6 @@ from fastapi import HTTPException
 import datetime
 
 import app.usecases as usecases
-import app.domains.entities as tag_entities
 
 
 # ここで記述処理は，型の変換と最小限のエラー処理．メインロジックはusecaseが担当するのであまり余計な事は書かない．
@@ -145,36 +144,3 @@ class SQLEventRepository(usecases.IEventRepository):
         )
         event = entities.Event.from_orm(query)
         return event
-
-    def create_tag(self, obj_in: tag_entities.TagCreate) -> tag_entities.Tag:
-        db_tag = tag_models.Tag(**obj_in.dict(), created_at=datetime.datetime.now())
-        self.db.add(db_tag)
-        self.db.commit()
-        self.db.refresh(db_tag)
-        return db_tag
-
-    def get_tag_by_id(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
-        if not self._find_tag(tag_id=tag_id):
-            raise HTTPException(status_code=401, detail="指定されたタグは存在しません")
-        get_event_model = self._find_event(event_id=event_id)
-        if not get_event_model:
-            raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
-        query = (
-            self.db.query(self.tag_model)
-            .filter(
-                self.tag_model.tag_id == tag_id, self.tag_model.event_id == event_id
-            )
-            .first()
-        )
-        event = tag_entities.Tag.from_orm(query)
-        return event
-
-    def delete_tag(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
-        if not self._find_event(event_id=event_id):
-            raise HTTPException(status_code=401, detail="指定されたイベントは存在しません")
-        tag_in_db = self._find_tag(tag_id=tag_id)
-        if not tag_in_db:
-            raise HTTPException(status_code=400, detail="指定されたタグは存在しません")
-        self.db.delete(tag_in_db)
-        deleted_tag = tag_entities.Tag.from_orm(tag_in_db)
-        return deleted_tag
