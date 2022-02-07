@@ -43,10 +43,11 @@ async def update_user(
 @router.delete("/{id}", response_model=None)
 async def delete_user(
     *, id: int, uu: usecases.UserUsecase = Depends(get_user_usecase)
-) -> entities.User:
+) -> Optional[entities.User]:
     deleted_user: Optional[entities.User] = uu.delete(id=id)
-    if deleted_user is not None:
+    if deleted_user is None:
         raise HTTPException(status_code=404, detail="ユーザー削除エラー")
+    return deleted_user
 
 
 @router.get("/{id}", response_model=entities.User)

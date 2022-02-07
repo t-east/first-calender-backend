@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Optional
 
-from sqlalchemy import null
 import app.domains.entities as entities
 import app.usecases as usecases
 from app.drivers.api.deps import get_event_usecase
@@ -75,5 +74,6 @@ async def delete_event(
     deleted_event: Optional[entities.Event] = eu.delete(
         event_id=event_id, user_id=user_id
     )
-    if deleted_event is not None:
+    if deleted_event is None:
         raise HTTPException(status_code=404, detail="イベント削除エラー")
+    return deleted_event

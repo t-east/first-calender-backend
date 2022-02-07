@@ -50,7 +50,7 @@ class SQLTagRepository(usecases.ITagRepository):
         tag = entities.Tag.from_orm(query)
         return tag
 
-    def delete(self, event_id: int, tag_id: int) -> None:
+    def delete(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
         if not self._find_event(event_id=event_id):
             raise HTTPException(status_code=401, detail="指定されたイベントは存在しません")
         tag_in_db = self._find_tag(tag_id=tag_id)
@@ -58,6 +58,7 @@ class SQLTagRepository(usecases.ITagRepository):
             raise HTTPException(status_code=400, detail="指定されたタグは存在しません")
         self.db.delete(tag_in_db)
         self.db.commit()
+        return entities.Tag.from_orm(tag_in_db)
 
     def get_list_by_id(self, event_id: int) -> entities.ListTagsResponse:
         if not self._find_event(event_id=event_id):

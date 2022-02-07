@@ -73,12 +73,13 @@ class SQLUserRepository(usecases.IUserRepository):
         get_user_model_entities = entities.User.from_orm(get_user_model)
         return get_user_model_entities
 
-    def delete(self, id: int) -> None:
+    def delete(self, id: int) -> Optional[entities.User]:
         deleted_user: models.User = self.db.query(models.User).get(id)
         if not deleted_user:
             raise HTTPException(status_code=404, detail="指定されたユーザーは存在しません")
         self.db.delete(deleted_user)
         self.db.commit()
+        return entities.User.from_orm(deleted_user)
 
     def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
         pass
