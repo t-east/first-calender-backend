@@ -23,7 +23,7 @@ class SQLEventRepository(usecases.IEventRepository):
         self.user_model = user_models.User
         self.tag_model = tag_models.Tag
 
-    def _validate_date(
+    def is_validate_date(
         self, from_date: datetime.datetime, to_date: datetime.datetime
     ) -> bool:
         return to_date < from_date
@@ -71,7 +71,7 @@ class SQLEventRepository(usecases.IEventRepository):
             url=obj_in.url,
             created_at=datetime.datetime.now(),
         )
-        if self._validate_date(db_event.from_date, db_event.to_date):
+        if self.is_validate_date(db_event.from_date, db_event.to_date):
             raise HTTPException(status_code=400, detail="invalid date")
         self.db.add(db_event)
         self.db.commit()
