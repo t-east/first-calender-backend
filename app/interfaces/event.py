@@ -12,7 +12,7 @@ from fastapi import HTTPException
 import datetime
 
 import app.usecases as usecases
-import app.domains.entities.tag as tag_entities
+import app.domains.entities as tag_entities
 
 
 # ここで記述処理は，型の変換と最小限のエラー処理．メインロジックはusecaseが担当するのであまり余計な事は書かない．
@@ -28,7 +28,7 @@ class SQLEventRepository(usecases.IEventRepository):
     ) -> bool:
         return to_date < from_date
 
-    def _find_user(self, user_id: int) -> bool:
+    def is_find_user(self, user_id: int) -> bool:
         user = (
             self.db.query(self.user_model)
             .filter(self.user_model.user_id == user_id)
@@ -86,7 +86,7 @@ class SQLEventRepository(usecases.IEventRepository):
         user_id: int,
         obj_in: Union[entities.EventUpdate, Dict[str, Any]],
     ) -> Optional[entities.Event]:
-        if not self._find_user(user_id):
+        if not self.is_find_user(user_id):
             raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
         get_event_model = self._find_event(event_id)
         if not get_event_model:
@@ -103,7 +103,7 @@ class SQLEventRepository(usecases.IEventRepository):
         return get_event_model_entities
 
     def delete(self, event_id: int, user_id: int) -> Optional[entities.Event]:
-        if not self._find_user(user_id=user_id):
+        if not self.is_find_user(user_id=user_id):
             raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
         event_in_db = self._find_event(event_id=event_id)
         if not event_in_db:
@@ -122,7 +122,7 @@ class SQLEventRepository(usecases.IEventRepository):
         return entities.ListEventsResponse(total=total, events=events)
 
     def get_list_by_id(self, user_id: int) -> entities.ListEventsResponse:
-        if not self._find_user(user_id=user_id):
+        if not self.is_find_user(user_id=user_id):
             raise HTTPException(status_code=400, detail="指定されたユーザーは存在しません")
         query = self.db.query(self.model).filter(self.model.user_id == user_id)
         events_in_db = query.all()
@@ -133,7 +133,7 @@ class SQLEventRepository(usecases.IEventRepository):
         return entities.ListEventsResponse(total=total, events=events)
 
     def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.Event]:
-        if not self._find_user(user_id=user_id):
+        if not self.is_find_user(user_id=user_id):
             raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
         get_event_model = self._find_event(event_id=event_id)
         if not get_event_model:
