@@ -1,10 +1,6 @@
 from fastapi import APIRouter
 
-from app.drivers.api.endpoints import (
-    user,
-    event,
-    tag
-)
+from app.drivers.api.endpoints import user, event, tag
 
 api_router = APIRouter()
 

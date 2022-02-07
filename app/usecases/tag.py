@@ -4,7 +4,6 @@ import app.domains.entities.tag as entities
 
 
 class ITagRepository(metaclass=abc.ABCMeta):
-
     @abc.abstractmethod
     def create_tag(self, obj_in: entities.TagCreate) -> entities.Tag:
         raise NotImplementedError

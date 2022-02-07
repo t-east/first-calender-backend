@@ -11,6 +11,7 @@ from fastapi import HTTPException
 import datetime
 import app.usecases as usecases
 
+
 class SQLTagRepository(usecases.ITagRepository):
     def __init__(self, db: Session) -> None:
         self.db: Session = db
@@ -19,11 +20,7 @@ class SQLTagRepository(usecases.ITagRepository):
         self.model = models.Tag
 
     def _find_tag(self, tag_id: int) -> Optional[models.Tag]:
-        tag = (
-            self.db.query(self.model)
-            .filter(self.model.tag_id == tag_id)
-            .first()
-        )
+        tag = self.db.query(self.model).filter(self.model.tag_id == tag_id).first()
         return tag
 
     def _find_event(self, event_id: int) -> Optional[event_models.Event]:
@@ -31,7 +28,6 @@ class SQLTagRepository(usecases.ITagRepository):
             self.db.query(self.model).filter(self.model.event_id == event_id).first()
         )
         return event
-
 
     def create_tag(self, obj_in: entities.TagCreate) -> entities.Tag:
         db_tag = models.Tag(**obj_in.dict(), created_at=datetime.datetime.now())
@@ -48,9 +44,7 @@ class SQLTagRepository(usecases.ITagRepository):
             raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
         query = (
             self.db.query(self.model)
-            .filter(
-                self.model.tag_id == tag_id, self.model.event_id == event_id
-            )
+            .filter(self.model.tag_id == tag_id, self.model.event_id == event_id)
             .first()
         )
         event = entities.Tag.from_orm(query)
