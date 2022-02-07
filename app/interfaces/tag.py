@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 
 # from fastapi.encoders import jsonable_encoder
@@ -29,14 +29,14 @@ class SQLTagRepository(usecases.ITagRepository):
         )
         return event
 
-    def create_tag(self, obj_in: entities.TagCreate) -> entities.Tag:
+    def create(self, obj_in: entities.TagCreate) -> entities.Tag:
         db_tag = models.Tag(**obj_in.dict(), created_at=datetime.datetime.now())
         self.db.add(db_tag)
         self.db.commit()
         self.db.refresh(db_tag)
         return db_tag
 
-    def get_tag_by_id(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
+    def get_by_id(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
         if not self._find_tag(tag_id=tag_id):
             raise HTTPException(status_code=401, detail="指定されたタグは存在しません")
         get_event_model = self._find_event(event_id=event_id)
@@ -47,10 +47,10 @@ class SQLTagRepository(usecases.ITagRepository):
             .filter(self.model.tag_id == tag_id, self.model.event_id == event_id)
             .first()
         )
-        event = entities.Tag.from_orm(query)
-        return event
+        tag = entities.Tag.from_orm(query)
+        return tag
 
-    def delete_tag(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
+    def delete(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
         if not self._find_event(event_id=event_id):
             raise HTTPException(status_code=401, detail="指定されたイベントは存在しません")
         tag_in_db = self._find_tag(tag_id=tag_id)
@@ -59,3 +59,14 @@ class SQLTagRepository(usecases.ITagRepository):
         self.db.delete(tag_in_db)
         deleted_tag = entities.Tag.from_orm(tag_in_db)
         return deleted_tag
+
+    def get_list_by_id(self, event_id: int) -> entities.ListTagsResponse:
+        if not self._find_event(event_id=event_id):
+            raise HTTPException(status_code=400, detail="指定されたイベントは存在しません")
+        query = self.db.query(self.model).filter(self.model.event_id == event_id)
+        tags_in_db = query.all()
+        events: List[entities.Tag] = [
+            entities.Tag.from_orm(tag) for tag in tags_in_db
+        ]
+        total: int = query.count()
+        return entities.ListTagsResponse(total=total, events=events)
