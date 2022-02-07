@@ -12,7 +12,7 @@ class Tag(Base):
     )
     #     user_id = Column(Integer, ForeignKey("users.user_id", ondelete="SET NULL"))
     label = Column(String(30), unique=False, index=True, nullable=False)
-    color = Column(String(6), nullable=False)
+    color = Column(String(30), nullable=False)
 
     created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=True)
