@@ -13,7 +13,7 @@ class ITagRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def delete(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
+    def delete(self, event_id: int, tag_id: int) -> None:
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -33,7 +33,7 @@ class TagUsecase:
     def get_by_id(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
         return self.repo.get_by_id(event_id=event_id, tag_id=tag_id)
 
-    def delete(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
+    def delete(self, event_id: int, tag_id: int) -> None:
         return self.repo.delete(event_id=event_id, tag_id=tag_id)
 
     def get_list_by_id(self, event_id: int) -> Optional[entities.ListTagsResponse]:
