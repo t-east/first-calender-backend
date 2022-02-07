@@ -25,7 +25,9 @@ class SQLTagRepository(usecases.ITagRepository):
 
     def _find_event(self, event_id: int) -> Optional[event_models.Event]:
         event = (
-            self.db.query(self.event_model).filter(self.event_model.event_id == event_id).first()
+            self.db.query(self.event_model)
+            .filter(self.event_model.event_id == event_id)
+            .first()
         )
         return event
 
