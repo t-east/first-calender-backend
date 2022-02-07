@@ -25,7 +25,7 @@ class SQLTagRepository(usecases.ITagRepository):
 
     def _find_event(self, event_id: int) -> Optional[event_models.Event]:
         event = (
-            self.db.query(self.model).filter(self.model.event_id == event_id).first()
+            self.db.query(self.event_model).filter(self.event_model.event_id == event_id).first()
         )
         return event
 
@@ -52,7 +52,7 @@ class SQLTagRepository(usecases.ITagRepository):
 
     def delete(self, event_id: int, tag_id: int) -> Optional[entities.Tag]:
         if not self._find_event(event_id=event_id):
-            raise HTTPException(status_code=401, detail="指定されたイベントは存在しません")
+            raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
         tag_in_db = self._find_tag(tag_id=tag_id)
         if not tag_in_db:
             raise HTTPException(status_code=400, detail="指定されたタグは存在しません")
