@@ -59,7 +59,6 @@ class SQLTagRepository(usecases.ITagRepository):
         self.db.delete(tag_in_db)
         self.db.commit()
 
-
     def get_list_by_id(self, event_id: int) -> entities.ListTagsResponse:
         if not self._find_event(event_id=event_id):
             raise HTTPException(status_code=400, detail="指定されたイベントは存在しません")
