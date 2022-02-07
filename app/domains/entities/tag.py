@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, Field
 
 
@@ -20,5 +20,13 @@ class TagInDBBase(TagBase):
 
 
 class Tag(TagInDBBase):
+    class Config:
+        orm_mode = True
+
+
+class ListTagsResponse(BaseModel):
+    total: int
+    events: List[Tag]
+
     class Config:
         orm_mode = True

@@ -12,7 +12,6 @@ from fastapi import HTTPException
 import datetime
 
 import app.usecases as usecases
-import app.domains.entities.tag as tag_entities
 
 
 # ここで記述処理は，型の変換と最小限のエラー処理．メインロジックはusecaseが担当するのであまり余計な事は書かない．
@@ -23,12 +22,12 @@ class SQLEventRepository(usecases.IEventRepository):
         self.user_model = user_models.User
         self.tag_model = tag_models.Tag
 
-    def _validate_date(
+    def is_validate_date(
         self, from_date: datetime.datetime, to_date: datetime.datetime
     ) -> bool:
         return to_date < from_date
 
-    def _find_user(self, user_id: int) -> bool:
+    def is_find_user(self, user_id: int) -> bool:
         user = (
             self.db.query(self.user_model)
             .filter(self.user_model.user_id == user_id)
@@ -71,7 +70,7 @@ class SQLEventRepository(usecases.IEventRepository):
             url=obj_in.url,
             created_at=datetime.datetime.now(),
         )
-        if self._validate_date(db_event.from_date, db_event.to_date):
+        if self.is_validate_date(db_event.from_date, db_event.to_date):
             raise HTTPException(status_code=400, detail="invalid date")
         self.db.add(db_event)
         self.db.commit()
@@ -86,15 +85,15 @@ class SQLEventRepository(usecases.IEventRepository):
         user_id: int,
         obj_in: Union[entities.EventUpdate, Dict[str, Any]],
     ) -> Optional[entities.Event]:
-        if not self._find_user(user_id):
+        if not self.is_find_user(user_id):
             raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
         get_event_model = self._find_event(event_id)
         if not get_event_model:
             raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
-
         for var, value in vars(obj_in).items():
             setattr(get_event_model, var, value) if value else None
-
+        if self.is_validate_date(get_event_model.from_date, get_event_model.to_date):
+            raise HTTPException(status_code=400, detail="invalid date")
         get_event_model.updated_at = datetime.datetime.now()
         self.db.add(get_event_model)
         self.db.commit()
@@ -103,7 +102,7 @@ class SQLEventRepository(usecases.IEventRepository):
         return get_event_model_entities
 
     def delete(self, event_id: int, user_id: int) -> Optional[entities.Event]:
-        if not self._find_user(user_id=user_id):
+        if not self.is_find_user(user_id=user_id):
             raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
         event_in_db = self._find_event(event_id=event_id)
         if not event_in_db:
@@ -122,7 +121,7 @@ class SQLEventRepository(usecases.IEventRepository):
         return entities.ListEventsResponse(total=total, events=events)
 
     def get_list_by_id(self, user_id: int) -> entities.ListEventsResponse:
-        if not self._find_user(user_id=user_id):
+        if not self.is_find_user(user_id=user_id):
             raise HTTPException(status_code=400, detail="指定されたユーザーは存在しません")
         query = self.db.query(self.model).filter(self.model.user_id == user_id)
         events_in_db = query.all()
@@ -133,7 +132,7 @@ class SQLEventRepository(usecases.IEventRepository):
         return entities.ListEventsResponse(total=total, events=events)
 
     def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.Event]:
-        if not self._find_user(user_id=user_id):
+        if not self.is_find_user(user_id=user_id):
             raise HTTPException(status_code=401, detail="指定されたユーザーは存在しません")
         get_event_model = self._find_event(event_id=event_id)
         if not get_event_model:
@@ -145,36 +144,3 @@ class SQLEventRepository(usecases.IEventRepository):
         )
         event = entities.Event.from_orm(query)
         return event
-
-    def create_tag(self, obj_in: tag_entities.TagCreate) -> tag_entities.Tag:
-        db_tag = tag_models.Tag(**obj_in.dict(), created_at=datetime.datetime.now())
-        self.db.add(db_tag)
-        self.db.commit()
-        self.db.refresh(db_tag)
-        return db_tag
-
-    def get_tag_by_id(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
-        if not self._find_tag(tag_id=tag_id):
-            raise HTTPException(status_code=401, detail="指定されたタグは存在しません")
-        get_event_model = self._find_event(event_id=event_id)
-        if not get_event_model:
-            raise HTTPException(status_code=404, detail="指定されたイベントは存在しません")
-        query = (
-            self.db.query(self.tag_model)
-            .filter(
-                self.tag_model.tag_id == tag_id, self.tag_model.event_id == event_id
-            )
-            .first()
-        )
-        event = tag_entities.Tag.from_orm(query)
-        return event
-
-    def delete_tag(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
-        if not self._find_event(event_id=event_id):
-            raise HTTPException(status_code=401, detail="指定されたイベントは存在しません")
-        tag_in_db = self._find_tag(tag_id=tag_id)
-        if not tag_in_db:
-            raise HTTPException(status_code=400, detail="指定されたタグは存在しません")
-        self.db.delete(tag_in_db)
-        deleted_tag = tag_entities.Tag.from_orm(tag_in_db)
-        return deleted_tag

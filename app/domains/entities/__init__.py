@@ -15,3 +15,10 @@ from app.domains.entities.event import (
     Event,
     ListEventsResponse,
 )
+from app.domains.entities.tag import (
+    TagBase,
+    TagCreate,
+    TagInDBBase,
+    Tag,
+    ListTagsResponse,
+)
