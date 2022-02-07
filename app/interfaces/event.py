@@ -108,6 +108,8 @@ class SQLEventRepository(usecases.IEventRepository):
         if not event_in_db:
             raise HTTPException(status_code=400, detail="指定されたイベントは存在しません")
         self.db.delete(event_in_db)
+        self.db.commit()
+        # self.db.refresh(event_in_db)
         deleted_event = entities.Event.from_orm(event_in_db)
         return deleted_event
         # 削除の前に_get_by_idで得たmodelsのuser_idと入力したuser_idを比較して正しい事を確認?

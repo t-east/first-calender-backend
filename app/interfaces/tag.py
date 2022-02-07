@@ -57,8 +57,8 @@ class SQLTagRepository(usecases.ITagRepository):
         if not tag_in_db:
             raise HTTPException(status_code=400, detail="指定されたタグは存在しません")
         self.db.delete(tag_in_db)
-        deleted_tag = entities.Tag.from_orm(tag_in_db)
-        return deleted_tag
+        self.db.commit()
+        return entities.Tag.from_orm(tag_in_db)
 
     def get_list_by_id(self, event_id: int) -> entities.ListTagsResponse:
         if not self._find_event(event_id=event_id):

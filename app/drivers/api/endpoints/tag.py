@@ -25,7 +25,7 @@ async def get_by_id(
     return get_tag
 
 
-@router.delete("/{event_id}/{tag_id}", response_model=entities.Tag)
+@router.delete("/{event_id}/{tag_id}", response_model=None)
 async def delete(
     *, event_id: int, tag_id: int, tu: usecases.TagUsecase = Depends(get_tag_usecase)
 ) -> Optional[entities.Tag]:

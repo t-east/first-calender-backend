@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Optional
+
 import app.domains.entities as entities
 import app.usecases as usecases
 from app.drivers.api.deps import get_event_usecase
@@ -63,7 +64,7 @@ async def get_events(
     return eu.get_list()
 
 
-@router.delete("/{user_id}/{event_id}", response_model=entities.Event)
+@router.delete("/{user_id}/{event_id}", response_model=None)
 async def delete_event(
     *,
     event_id: int,
