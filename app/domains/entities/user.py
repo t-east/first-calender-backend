@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr, Field
 
 
 class UserBase(BaseModel):
-    user_name: str = Field(max_length=12)
+    user_name: str = Field(max_length=30)
     email: Optional[EmailStr]
 
 
