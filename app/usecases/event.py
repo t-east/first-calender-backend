@@ -1,8 +1,6 @@
 import abc
 from typing import Any, Dict, Optional, Union
-
 import app.domains.entities as entities
-import app.domains.entities.tag as tag_entities
 
 
 class IEventRepository(metaclass=abc.ABCMeta):
@@ -35,18 +33,6 @@ class IEventRepository(metaclass=abc.ABCMeta):
     def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.Event]:
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def create_tag(self, obj_in: tag_entities.TagCreate) -> tag_entities.Tag:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def get_tag_by_id(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def delete_tag(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
-        raise NotImplementedError
-
 
 class EventUsecase:
     repo: IEventRepository
@@ -76,12 +62,3 @@ class EventUsecase:
 
     def get_by_id(self, event_id: int, user_id: int) -> Optional[entities.Event]:
         return self.repo.get_by_id(event_id=event_id, user_id=user_id)
-
-    def create_tag(self, obj_in: tag_entities.TagCreate) -> tag_entities.Tag:
-        return self.repo.create_tag(obj_in=obj_in)
-
-    def get_tag_by_id(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
-        return self.repo.get_tag_by_id(event_id=event_id, tag_id=tag_id)
-
-    def delete_tag(self, event_id: int, tag_id: int) -> Optional[tag_entities.Tag]:
-        return self.repo.delete_tag(event_id=event_id, tag_id=tag_id)
