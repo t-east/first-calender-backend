@@ -1,0 +1,85 @@
+# Note: 必ずしもDBスキーマとは一致しない。
+
+- model: user
+  fields:
+    email: test1@test.test
+    password: test_pass
+    user_name: test_user1
+
+- model: user
+  fields:
+    email: test2@test.test
+    password: test_pass
+    user_name: test_user2
+
+- model: event
+  fields:
+    user_id: 1
+    title: イベント１
+    description_text: イベント１の詳細
+    from_date: "2022-01-27"
+    is_all_day: false
+    to_date: "2022-01-30"
+
+- model: event
+  fields:
+    user_id: 1
+    title: イベント2
+    description_text: イベント2の詳細
+    from_date: "2022-01-28"
+    is_all_day: false
+    to_date: "2022-01-28"
+
+- model: event
+fields:
+  user_id: 1
+  title: イベント3
+  description_text: イベント3の詳細
+  from_date: "2022-02-01"
+  is_all_day: false
+  to_date: "2022-02-01"
+
+- model: event
+fields:
+  user_id: 1
+  title: イベント4
+  description_text: イベント4の詳細
+  from_date: "2022-02-02"
+  is_all_day: false
+  to_date: "2022-02-03"
+
+- model: event
+fields:
+  user_id: 1
+  title: イベント5
+  description_text: イベント5の詳細
+  from_date: "2022-02-02"
+  is_all_day: false
+  to_date: "2022-02-10"
+
+- model: event
+fields:
+  user_id: 1
+  title: イベント6
+  description_text: イベント6の詳細
+  from_date: "2022-02-28"
+  is_all_day: false
+  to_date: "2022-03-02"
+
+- model: event
+fields:
+  user_id: 1
+  title: イベント7
+  description_text: イベント7の詳細
+  from_date: "2022-02-28"
+  is_all_day: false
+  to_date: "2022-02-28"
+
+- model: event
+fields:
+  user_id: 1
+  title: イベント8
+  description_text: イベント8の詳細
+  from_date: "2022-03-01"
+  is_all_day: false
+  to_date: "2022-03-03"

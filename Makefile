@@ -11,6 +11,11 @@ del:
 dev:
 	docker-compose -f docker-compose.yml up
 
+# 初期データ挿入
+initd:
+	docker-compose -f docker-compose.yml exec fastapi bash
+# この後bash上で  python app/load_data.py
+
 # Flake8のLinter実行
 flake8:
 	docker-compose -f docker-compose.yml run --rm fastapi flake8 app

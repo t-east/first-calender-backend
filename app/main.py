@@ -16,4 +16,4 @@ app.add_middleware(
 )
 
 app.include_router(api_router)
-Base.metadata.create_all(ENGINE)
+Base.metadata.create_all(bind=ENGINE, checkfirst=False)
