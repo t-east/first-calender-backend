@@ -7,8 +7,8 @@ from app.domains.entities.tag import Tag
 class EventBase(BaseModel):
     title: Optional[str] = Field(max_length=30)
     description_text: Optional[str] = None
-    to_date: datetime.date
-    from_date: datetime.date
+    to_date: datetime.datetime
+    from_date: datetime.datetime
     is_all_day: Optional[bool] = False
     url: Optional[str] = None
 
