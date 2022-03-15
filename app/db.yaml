@@ -1,0 +1,31 @@
+# Note: 必ずしもDBスキーマとは一致しない。
+
+- model: user
+  fields:
+    email: test1@test.test
+    password: test_pass
+    user_name: test_user1
+
+- model: user
+  fields:
+    email: test2@test.test
+    password: test_pass
+    user_name: test_user2
+
+- model: event
+  fields:
+    user_id: 1
+    title: イベント１
+    description_text: イベント１の詳細
+    from_date: "2022-01-27"
+    is_all_day: false
+    to_date: "2022-01-30"
+
+- model: event
+  fields:
+    user_id: 1
+    title: イベント2
+    description_text: イベント2の詳細
+    from_date: "2022-01-28"
+    is_all_day: false
+    to_date: "2022-01-28"
