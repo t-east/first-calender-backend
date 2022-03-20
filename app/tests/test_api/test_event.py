@@ -24,7 +24,7 @@ def post_event(
         "description_text": description_text,
         "is_all_day": is_all_day,
     }
-    return client.post("/api/event/", data=data)
+    return client.post("/api/events/", data=data)
 
 
 def test_post_event(client: TestClient, db: scoped_session) -> None:
@@ -32,11 +32,11 @@ def test_post_event(client: TestClient, db: scoped_session) -> None:
         "user_id": 1,
         "title": "タイトル",
         "description_text": "内容",
-        "from_date": "1993-09-11",
+        "from_date": "2022-03-20T15:47:04.097Z",
         "is_all_day": False,
-        "to_date": "1999-09-11",
+        "to_date": "2022-03-20T15:47:04.097Z",
     }
-    r = client.post("/api/event/", json=data)
+    r = client.post("/api/events/", json=data)
     assert r.status_code == StatusCode.OK
 
 
@@ -57,11 +57,11 @@ def test_post_event_invalid_date(client: TestClient, db: scoped_session) -> None
         "user_id": 1,
         "title": "タイトル",
         "description_text": "内容",
-        "from_date": "2012-09-11",
+        "from_date": "2022-03-23T15:47:04.097Z",
         "is_all_day": False,
-        "to_date": "2000-09-11",
+        "to_date": "2022-03-20T15:47:04.097Z",
     }
-    r = client.post("/api/event/", json=data)
+    r = client.post("/api/events/", json=data)
     assert r.status_code == StatusCode.BadRequest
 
 
@@ -72,13 +72,13 @@ def test_post_event_invalid_date(client: TestClient, db: scoped_session) -> None
 
 
 def test_get_event_list(client: TestClient, db: scoped_session) -> None:
-    r: requests.Response = client.get("/api/event/")
+    r: requests.Response = client.get("/api/events/")
     assert r.status_code == StatusCode.OK
 
 
 def test_get_event_list_by_user_id(client: TestClient, db: scoped_session) -> None:
     user_id = 1
-    r: requests.Response = client.get(f"/api/event/{user_id}")
+    r: requests.Response = client.get(f"/api/events/{user_id}")
     assert r.status_code == StatusCode.OK
 
 
@@ -86,28 +86,28 @@ def test_get_event_list_by_user_id_error(
     client: TestClient, db: scoped_session
 ) -> None:
     user_id = 100
-    r: requests.Response = client.get(f"/api/event/{user_id}")
+    r: requests.Response = client.get(f"/api/events/{user_id}")
     assert r.status_code == StatusCode.BadRequest
 
 
 def test_get_event(client: TestClient, db: scoped_session) -> None:
     event_id = 1
     # user_id = 1
-    r: requests.Response = client.get(f"/api/event/{event_id}")
+    r: requests.Response = client.get(f"/api/events/{event_id}")
     assert r.status_code == StatusCode.OK
 
 
 def test_get_event_error(client: TestClient, db: scoped_session) -> None:
     event_id = 100
     # user_id = 1
-    r: requests.Response = client.get(f"/api/event/{event_id}")
+    r: requests.Response = client.get(f"/api/events/{event_id}")
     assert r.status_code == StatusCode.BadRequest
 
 
 def test_delete_event(client: TestClient, db: scoped_session) -> None:
-    event_id = 1
-    user_id = 1
-    r: requests.Response = client.delete(f"/api/event/{user_id}/{event_id}")
+    event_id: int = 1
+    user_id: int = 1
+    r: requests.Response = client.delete(f"/api/events/{user_id}/{event_id}")
     assert r.status_code == StatusCode.OK
 
 
@@ -116,12 +116,12 @@ def test_delete_event_error_invalid_user(
 ) -> None:
     event_id = 1
     user_id = 100
-    r: requests.Response = client.delete(f"/api/event/{user_id}/{event_id}")
+    r: requests.Response = client.delete(f"/api/events/{user_id}/{event_id}")
     assert r.status_code == StatusCode.Unauthorized
 
 
 def test_delete_event_error(client: TestClient, db: scoped_session) -> None:
     event_id = 100
     user_id = 1
-    r: requests.Response = client.delete(f"/api/event/{user_id}/{event_id}")
+    r: requests.Response = client.delete(f"/api/events/{user_id}/{event_id}")
     assert r.status_code == StatusCode.BadRequest
