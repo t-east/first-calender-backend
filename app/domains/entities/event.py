@@ -1,7 +1,8 @@
 from typing import Optional, List
 import datetime
 from pydantic import BaseModel, Field
-from app.domains.entities.tag import Tag
+
+# from app.domains.entities.tag import Tag
 
 
 class EventBase(BaseModel):

@@ -70,9 +70,7 @@ def test_get_tag_list_by_event_id(client: TestClient, db: scoped_session) -> Non
     assert r.status_code == StatusCode.OK
 
 
-def test_get_tag_list_by_event_id_error(
-    client: TestClient, db: scoped_session
-) -> None:
+def test_get_tag_list_by_event_id_error(client: TestClient, db: scoped_session) -> None:
     event_id = 100
     r: requests.Response = client.get(f"/api/tags/{event_id}")
     assert r.status_code == StatusCode.BadRequest
@@ -99,9 +97,7 @@ def test_delete_tag(client: TestClient, db: scoped_session) -> None:
     assert r.status_code == StatusCode.OK
 
 
-def test_delete_tag_error_invalid_event(
-    client: TestClient, db: scoped_session
-) -> None:
+def test_delete_tag_error_invalid_event(client: TestClient, db: scoped_session) -> None:
     tag_id = 1
     event_id = 100
     r: requests.Response = client.delete(f"/api/tags/{event_id}/{tag_id}")
