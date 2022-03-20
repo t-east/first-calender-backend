@@ -24,7 +24,7 @@ class EventUpdate(EventBase):
 class EventInDBBase(EventBase):
     event_id: int
     user_id: int
-    tags: List[Tag] = []
+    # tags: List[Tag] = []
 
     class Config:
         orm_mode = True
