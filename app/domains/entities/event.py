@@ -1,7 +1,8 @@
 from typing import Optional, List
 import datetime
 from pydantic import BaseModel, Field
-from app.domains.entities.tag import Tag
+
+# from app.domains.entities.tag import Tag
 
 
 class EventBase(BaseModel):
@@ -24,7 +25,7 @@ class EventUpdate(EventBase):
 class EventInDBBase(EventBase):
     event_id: int
     user_id: int
-    tags: List[Tag] = []
+    # tags: List[Tag] = []
 
     class Config:
         orm_mode = True

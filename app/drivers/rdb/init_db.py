@@ -17,6 +17,12 @@ def create_event(db: Session, data: dict) -> None:
     eu.create(obj_in)
 
 
+def create_tag(db: Session, data: dict) -> None:
+    obj_in = entities.TagCreate(**data)
+    tu = deps.get_tag_usecase(db)
+    tu.create(obj_in)
+
+
 def init_db(db: Session, fixtures: List[Dict[str, Any]]) -> None:
     for data in fixtures:
         eval(f"create_{data['model']}")(db, data["fields"])
