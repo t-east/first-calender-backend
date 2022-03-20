@@ -18,16 +18,16 @@ def post_user(
         "email": email,
         "password": password,
     }
-    return client.post("/api/user/", json=data)
+    return client.post("/api/users/", json=data)
 
 
 def test_create_user(client: TestClient, db: scoped_session) -> None:
     data: Dict[str, Any] = {
         "user_name": "山田",
-        "email": "test@example.com",
+        "email": "test11@example.com",
         "password": "test",
     }
-    r = client.post("/api/user/", json=data)
+    r = client.post("/api/users/", json=data)
     assert r.status_code == StatusCode.OK
 
     resp: Dict[str, Any] = r.json()
@@ -36,22 +36,22 @@ def test_create_user(client: TestClient, db: scoped_session) -> None:
 
 def test_read_user(client: TestClient, db: scoped_session) -> None:
     id: int = 1
-    r = client.get(f"/api/user/{id}")
+    r = client.get(f"/api/users/{id}")
     assert r.status_code == StatusCode.OK
 
 
 # 登録済みのemailでの登録をはじく
 def test_create_user_error(client: TestClient, db: scoped_session) -> None:
-    r = post_user(client=client, db=db, email="test@example.com")
+    r = post_user(client=client, db=db, email="test11@example.com")
     r.status_code == StatusCode.BadRequest
 
 
 def test_delete_user_error(client: TestClient, db: scoped_session) -> None:
     id: int = 100
-    r = client.delete(f"/api/user/{id}")
+    r = client.delete(f"/api/users/{id}")
     assert r.status_code == StatusCode.NotFound
 
 
 def test_delete_user(client: TestClient, db: scoped_session) -> None:
-    r = client.delete("/api/user/2")
+    r = client.delete("/api/users/2")
     assert r.status_code == StatusCode.OK
