@@ -2,13 +2,13 @@
 
 - model: user
   fields:
-    email: test1@test.test
+    email: jfvvmmfhda@fjajf.fajfo
     password: test_pass
     user_name: test_user1
 
 - model: user
   fields:
-    email: test2@test.test
+    email: sfsdfsg@gasssgs.bkjlk
     password: test_pass
     user_name: test_user2
 
@@ -17,24 +17,30 @@
     user_id: 1
     title: イベント１
     description_text: イベント１の詳細
-    from_date: "2022-01-27"
+    from_date: "2022-03-19T15:47:04.097Z"
     is_all_day: false
-    to_date: "2022-01-30"
+    to_date: "2022-03-20T15:47:04.097Z"
 
 - model: event
   fields:
     user_id: 1
     title: イベント2
     description_text: イベント2の詳細
-    from_date: "2022-01-28"
+    from_date: "2022-01-28T15:47:04.097Z"
     is_all_day: false
-    to_date: "2022-01-28"
+    to_date: "2022-01-28T15:47:04.097Z"
 
 - model: event
   fields:
     user_id: 1
-    title: 
-    description_text: 
-    from_date: "2022-01-27"
-    is_all_day: 
-    to_date: "2022-01-30"
+    title: イベント3
+    description_text: イベント3の詳細
+    from_date: "2022-01-27T15:47:04.097Z"
+    is_all_day: True
+    to_date: "2022-01-30T15:47:04.097Z"
+
+- model: tag
+  fields:
+    event_id: 1
+    label: タグラベル１
+    color: ffffff
