@@ -11,9 +11,9 @@ class UserCreate(UserBase):
     password: str
 
 
-class UserAuth(BaseModel):
-    email: EmailStr
-    password: str
+# class UserAuth(UserBase):
+#     hashed_password: str
+#     disabled: Optional[bool]
 
 
 class UserUpdate(UserBase):

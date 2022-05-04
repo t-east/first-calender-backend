@@ -1,4 +1,4 @@
-from sqlalchemy import TEXT, Column, Integer, String, DateTime
+from sqlalchemy import TEXT, Column, Integer, String, DateTime, Boolean
 from sqlalchemy_utils import EmailType
 from app.drivers.rdb.base import Base
 
@@ -16,3 +16,4 @@ class User(Base):
     last_login_at = Column(DateTime, nullable=True)
 
     updated_at = Column(DateTime, nullable=True)
+    disabled =     disabled = Column(Boolean, nullable=False)

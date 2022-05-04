@@ -81,7 +81,7 @@ class SQLUserRepository(usecases.IUserRepository):
         self.db.commit()
         return entities.User.from_orm(deleted_user)
 
-    def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
-        pass
-        # 入力されたメールアドレス，パスワードを用いてDBの値と一致しているか確認する．
-        # _get_by_emailを使って得たhashedpassとpasswordをハッシュ化したものを比較して正しければentities.Userを出力
+    # def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
+    #     pass
+    #     # 入力されたメールアドレス，パスワードを用いてDBの値と一致しているか確認する．
+    #     # _get_by_emailを使って得たhashedpassとpasswordをハッシュ化したものを比較して正しければentities.Userを出力
