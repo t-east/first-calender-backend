@@ -17,14 +17,14 @@ async def create_user(
     return uu.create(obj_in=user_in)
 
 
-@router.post("/login", response_model=entities.User)
-async def login_user(
-    *, auth_in: entities.UserAuth, uu: usecases.UserUsecase = Depends(get_user_usecase)
-) -> entities.User:
-    logined_user: Optional[entities.User] = uu.authenticate(auth_in=auth_in)
-    if logined_user is None:
-        raise HTTPException(status_code=404)
-    return logined_user
+# @router.post("/login", response_model=entities.User)
+# async def login_user(
+#     *, auth_in: entities.UserAuth, uu: usecases.UserUsecase = Depends(get_user_usecase)
+# ) -> entities.User:
+#     logined_user: Optional[entities.User] = uu.authenticate(auth_in=auth_in)
+#     if logined_user is None:
+#         raise HTTPException(status_code=404)
+#     return logined_user
 
 
 @router.put("/", response_model=entities.User)

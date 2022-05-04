@@ -4,7 +4,6 @@ from app.domains.entities.user import (
     UserUpdate,
     UserInDBBase,
     User,
-    UserAuth,
     UserInDB,
 )
 from app.domains.entities.event import (

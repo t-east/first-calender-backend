@@ -6,3 +6,4 @@ app/.DS_Store
 __pycache__/
 .coverage
 test_temp.db
+app/drivers/user_auth/jwt_secret_data.py

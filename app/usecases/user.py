@@ -23,9 +23,9 @@ class IUserRepository(metaclass=abc.ABCMeta):
     def delete(self, id: int) -> Optional[entities.User]:
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
-        raise NotImplementedError
+    # @abc.abstractmethod
+    # def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
+    #     raise NotImplementedError
 
 
 class UserUsecase:
@@ -52,5 +52,5 @@ class UserUsecase:
     def delete(self, id: int) -> Optional[entities.User]:
         return self.repo.delete(id=id)
 
-    def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
-        return self.repo.authenticate(auth_in=auth_in)
+    # def authenticate(self, auth_in: entities.UserAuth) -> Optional[entities.User]:
+    #     return self.repo.authenticate(auth_in=auth_in)
